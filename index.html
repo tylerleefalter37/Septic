@@ -1,0 +1,3618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>OCCULT MACHINE: THE SOUL SPLICER // 128³ Biomechanical Forge (2,000 Codex &amp; Squad Edition)</title>
+<style>
+  :root {
+    --bg-void: #030406;
+    --bg-deep: #07090e;
+    --bg-panel: #0d0f15;
+    --bg-card: #12151e;
+    --bg-elev: #1a1f2c;
+    --border: #2c3344;
+    --silver: #d8e0ec;
+    --silver-dim: #8e9bb0;
+    --white-glow: #ffffff;
+    --gold: #f5b041;
+    --crimson: #ef4444;
+    --emerald: #10b981;
+    --purple: #a855f7;
+    --cyan: #38bdf8;
+    --text-main: #f4f7fb;
+    --text-dim: #8b96a8;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    width: 100%; max-width: 100vw; overflow-x: hidden;
+    background: radial-gradient(circle at 50% 0%, #220c10 0%, var(--bg-void) 75%);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    user-select: none;
+  }
+
+  /* ========================================================================
+     1. ULTRA-COMPACT STICKY MICRO-HUD (< 18% VERTICAL PHONE SCREEN HEIGHT)
+     ======================================================================== */
+  .hud-header {
+    position: sticky; top: 0; z-index: 100;
+    width: 100%;
+    background: rgba(3, 4, 6, 0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--silver);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.9);
+    padding: 4px 6px 5px;
+  }
+  .hud-top-row {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 4px; max-width: 1400px; margin: 0 auto 3px;
+  }
+  .brand-title {
+    display: flex; align-items: center; gap: 5px;
+    font-weight: 900; letter-spacing: 0.4px; font-size: 11px; color: #fff;
+    text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .brand-badge {
+    background: #050608; color: var(--crimson); padding: 1px 4px;
+    font-size: 9px; font-weight: 900; border: 1px solid var(--crimson);
+  }
+  .hud-actions { display: flex; gap: 4px; align-items: center; flex-shrink: 0; }
+
+  /* ROW 2: 5-COLUMN TELEMETRY BAR */
+  .hud-stats {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 3px; max-width: 1400px; margin: 0 auto 4px;
+  }
+  .stat-pill {
+    background: #0b0d13; border: 1px solid #2b3344; border-left: 2px solid var(--silver);
+    padding: 2px 4px; display: flex; flex-direction: column; min-width: 0; overflow: hidden;
+  }
+  .stat-pill span {
+    color: var(--text-dim); font-size: 8px; font-weight: 700;
+    text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .stat-pill b {
+    font-family: "Courier New", monospace; font-size: 10px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .val-gold { color: var(--gold); }
+  .val-silver { color: var(--silver); }
+  .val-emerald { color: var(--emerald); }
+  .val-purple { color: var(--purple); }
+  .val-crimson { color: var(--crimson); }
+  .val-cyan { color: var(--cyan); }
+
+  /* ROW 3 & 4: LOCKED 2×3 NAVIGATION GRID */
+  .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3px; max-width: 1400px; margin: 0 auto;
+  }
+  .nav-btn {
+    background: linear-gradient(180deg, #161a24 0%, #0a0c12 100%);
+    color: var(--text-dim); border: 1px solid #2c3344;
+    padding: 5px 3px; font-size: 10px; font-weight: 900;
+    text-transform: uppercase; cursor: pointer; text-align: center;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+    border-radius: 3px;
+  }
+  .nav-btn.active {
+    background: linear-gradient(180deg, #381920 0%, #140b10 100%);
+    color: #fff; border-color: #fff;
+    box-shadow: inset 0 0 8px rgba(239, 68, 68, 0.35);
+  }
+  .nav-badge {
+    display: inline-block; background: #050608; color: var(--gold);
+    border: 1px solid #475569; padding: 0 3px; border-radius: 2px;
+    font-size: 9px; margin-left: 2px; font-family: "Courier New", monospace;
+  }
+
+  /* MAIN LAYOUT */
+  .main-wrap {
+    width: 100%; max-width: 1400px; margin: 0 auto; padding: 8px 6px 48px;
+  }
+  .tab-pane { display: none; width: 100%; }
+  .tab-pane.active { display: block; }
+
+  .section-bar {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+    gap: 6px; margin-bottom: 8px; background: var(--bg-panel);
+    border: 1px solid var(--border); border-left: 3px solid var(--silver);
+    padding: 7px 9px; width: 100%; border-radius: 4px;
+  }
+  .section-title { font-size: 11px; font-weight: 900; color: var(--silver); text-transform: uppercase; }
+  .section-sub { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+
+  .qol-bar {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px; margin-bottom: 8px; width: 100%;
+  }
+  @media (max-width: 640px) {
+    .qol-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  /* CARDS & GRIDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 7px; width: 100%;
+  }
+  @media (max-width: 520px) {
+    .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
+  }
+  .unit-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    padding: 6px; display: flex; flex-direction: column; gap: 4px;
+    position: relative; min-width: 0; max-width: 100%; border-radius: 4px;
+  }
+  .unit-card.squad-3 { border-color: rgba(16, 185, 129, 0.55); }
+  .unit-card.squad-5 { border-color: rgba(245, 176, 65, 0.75); }
+  .unit-thumb-wrap {
+    width: 100%; height: 118px;
+    background: radial-gradient(circle at 50% 52%, #2a1216 0%, #05060a 85%);
+    border: 1px solid #262e40; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; position: relative; overflow: hidden; border-radius: 3px;
+  }
+  .unit-thumb {
+    width: 112px; height: 112px;
+    object-fit: contain; display: block;
+    image-rendering: auto;
+  }
+  .tier-tag {
+    position: absolute; top: 3px; left: 3px; padding: 1px 4px;
+    font-size: 9px; font-weight: 900; background: rgba(4, 5, 8, 0.92);
+    border: 1px solid currentColor; border-radius: 2px;
+  }
+  .squad-tag {
+    position: absolute; top: 21px; left: 3px; padding: 1px 4px;
+    font-size: 8px; font-weight: 900; background: rgba(4, 5, 8, 0.92);
+    border: 1px solid currentColor; border-radius: 2px;
+  }
+  .dex-tag {
+    position: absolute; bottom: 3px; left: 3px; padding: 1px 4px;
+    font-size: 9px; font-weight: 800; font-family: "Courier New", monospace;
+    background: rgba(4, 5, 8, 0.92); color: var(--gold); border: 1px solid #475569;
+  }
+  .finish-tag {
+    position: absolute; top: 3px; right: 3px; padding: 1px 4px;
+    font-size: 8px; font-weight: 700; background: rgba(12, 15, 22, 0.92);
+    color: var(--silver); border: 1px solid #334155; max-width: 60%;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .inspect-hint {
+    position: absolute; bottom: 3px; right: 3px; font-size: 8px; color: #fff;
+    background: rgba(4, 5, 8, 0.88); border: 1px solid rgba(255, 255, 255, 0.35); padding: 1px 4px;
+  }
+  .unit-title {
+    font-size: 10px; font-weight: 800; color: #fff; line-height: 1.2;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .unit-meta {
+    font-size: 9px; color: var(--text-dim);
+    display: flex; justify-content: space-between; gap: 3px;
+    white-space: nowrap; overflow: hidden;
+  }
+  .stat-row {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px;
+    background: #080a0f; border: 1px solid #1f2533;
+    padding: 3px 2px; font-size: 9px; text-align: center;
+  }
+  .hp-bar-outer {
+    width: 100%; height: 5px; background: #050608; overflow: hidden; border: 1px solid #222836;
+  }
+  .hp-bar-inner { height: 100%; background: var(--emerald); transition: width 0.2s; }
+
+  /* BUTTONS & INPUTS */
+  .btn {
+    background: var(--bg-elev); color: var(--text-main);
+    border: 1px solid #3c465c; padding: 5px 7px; font-size: 9px; font-weight: 800;
+    text-transform: uppercase; cursor: pointer; border-radius: 3px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 3px; min-width: 0;
+  }
+  .btn-xs { padding: 3px 5px; font-size: 8px; }
+  .btn:hover:not(:disabled) { border-color: #fff; color: #fff; }
+  .btn:disabled { opacity: 0.42; cursor: not-allowed; }
+  .btn-silver { background: linear-gradient(180deg, #333b4d, #161a24); border-color: var(--silver); color: #fff; }
+  .btn-gold { background: linear-gradient(180deg, #d97706, #78350f); border-color: #f59e0b; color: #fff; }
+  .btn-emerald { background: linear-gradient(180deg, #059669, #064e3b); border-color: #34d399; color: #fff; }
+  .btn-crimson { background: linear-gradient(180deg, #dc2626, #7f1d1d); border-color: #f87171; color: #fff; }
+  .btn-purple { background: linear-gradient(180deg, #7e22ce, #4c1d95); border-color: #c084fc; color: #fff; }
+  .btn-cyan { background: linear-gradient(180deg, #0284c7, #0c4a6e); border-color: #38bdf8; color: #fff; }
+  .btn-god { background: linear-gradient(135deg, #f59e0b, #b91c1c); border-color: #fff; color: #fff; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 4px; width: 100%; }
+
+  select, input[type="text"] {
+    background: #07080c; color: var(--text-main); border: 1px solid #333c4f;
+    padding: 4px 5px; font-size: 10px; width: 100%; min-width: 0; border-radius: 3px;
+  }
+  label.chk-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #07080c; border: 1px solid var(--gold); color: var(--gold);
+    padding: 3px 7px; font-size: 9px; font-weight: 800; cursor: pointer; white-space: nowrap; border-radius: 3px;
+  }
+
+  /* TAB 2: SOUL SPLICER & 5-ZONE HEX STUDIO */
+  .forge-studio-grid {
+    display: grid; grid-template-columns: 300px minmax(0, 1fr);
+    gap: 8px; align-items: start; width: 100%;
+  }
+  @media (max-width: 820px) {
+    .forge-studio-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+  .forge-preview-box {
+    background: var(--bg-panel); border: 1px solid var(--silver);
+    padding: 8px; width: 100%; min-width: 0; border-radius: 4px;
+  }
+  #forge-canvas, #inspector-canvas {
+    width: 100%; max-width: 260px; height: auto; aspect-ratio: 1 / 1;
+    display: block; margin: 0 auto;
+    background: radial-gradient(circle at 50% 52%, #2e1116 0%, #040508 85%);
+    border: 1px solid var(--border); cursor: grab; touch-action: none; border-radius: 4px;
+  }
+  .forge-controls-box {
+    background: var(--bg-panel); border: 1px solid var(--border);
+    padding: 8px; display: flex; flex-direction: column; gap: 7px; width: 100%; min-width: 0; border-radius: 4px;
+  }
+  .control-group {
+    background: var(--bg-card); border: 1px solid #242a38;
+    padding: 7px; width: 100%; min-width: 0; border-radius: 3px;
+  }
+  .control-label {
+    font-size: 10px; font-weight: 900; color: var(--silver);
+    text-transform: uppercase; margin-bottom: 5px;
+    display: flex; justify-content: space-between; align-items: center; gap: 4px;
+  }
+  .paint-zone-row { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+  .hex-input {
+    width: 78px !important; font-family: "Courier New", monospace;
+    font-weight: 800; font-size: 10px; text-transform: uppercase;
+    border: 1px solid var(--silver); background: #040508; color: #fff; padding: 3px 5px; flex-shrink: 0;
+  }
+  .color-wheel-input {
+    width: 26px; height: 24px; padding: 0; border: 1px solid #fff;
+    background: none; cursor: pointer; flex-shrink: 0;
+  }
+  .swatch-row { display: flex; flex-wrap: wrap; gap: 3px; flex: 1; min-width: 110px; }
+  .color-swatch { width: 18px; height: 18px; border: 1px solid #3c465c; cursor: pointer; border-radius: 2px; }
+
+  /* TAB 4: BARGAIN BUYER SPOTLIGHT */
+  .snipe-spotlight {
+    background: linear-gradient(135deg, #16121b 0%, #08090e 100%);
+    border: 2px solid var(--silver); padding: 9px; margin-bottom: 12px;
+    display: grid; grid-template-columns: 124px minmax(0, 1fr);
+    gap: 9px; align-items: center; width: 100%; border-radius: 4px;
+  }
+  @media (max-width: 480px) {
+    .snipe-spotlight { grid-template-columns: 106px minmax(0, 1fr); gap: 7px; }
+  }
+  .intermission-banner {
+    padding: 5px 7px; font-size: 9px; font-weight: 900; text-transform: uppercase;
+    display: none; justify-content: space-between; align-items: center; border: 1px solid currentColor;
+  }
+  .intermission-banner.show { display: flex; }
+
+  /* TAB 5: RITUAL ARENA */
+  .arena-grid {
+    display: grid; grid-template-columns: minmax(0, 1fr) 280px minmax(0, 1fr);
+    gap: 8px; width: 100%;
+  }
+  @media (max-width: 860px) {
+    .arena-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+  .arena-side, .arena-center {
+    background: var(--bg-panel); border: 1px solid var(--border);
+    padding: 8px; min-width: 0; border-radius: 4px;
+  }
+  .arena-center { display: flex; flex-direction: column; gap: 7px; align-items: center; }
+  .dice-tray { display: flex; gap: 10px; justify-content: center; }
+  .die-box {
+    width: 40px; height: 40px; background: linear-gradient(145deg, #2b1419, #090b10);
+    border: 2px solid #fff; color: #fff; font-size: 20px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; border-radius: 4px;
+  }
+  .combat-log {
+    width: 100%; height: 140px; overflow-y: auto;
+    background: #050609; border: 1px solid var(--border);
+    padding: 5px; font-size: 9px; font-family: "Courier New", monospace; line-height: 1.4;
+  }
+  .fighter-slot {
+    background: var(--bg-card); border: 1px solid var(--border);
+    padding: 5px; margin-bottom: 5px; display: flex; align-items: center; gap: 7px; border-radius: 3px;
+  }
+  .fighter-slot.dead { opacity: 0.35; filter: grayscale(1); }
+
+  /* MODALS */
+  .modal-backdrop {
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(2, 3, 6, 0.88); backdrop-filter: blur(6px);
+    display: none; align-items: center; justify-content: center; padding: 10px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal-box {
+    background: #0b0d13; border: 2px solid var(--silver);
+    max-width: 760px; width: 100%; padding: 10px;
+    display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 10px;
+    max-height: 92vh; overflow-y: auto; border-radius: 6px;
+  }
+  @media (max-width: 700px) {
+    .modal-box { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  #toast-wrap {
+    position: fixed; bottom: 12px; right: 12px; left: 12px; z-index: 1200;
+    display: flex; flex-direction: column; gap: 4px; pointer-events: none; align-items: center;
+  }
+  .toast-msg {
+    background: rgba(10, 12, 18, 0.96); color: #fff;
+    border-left: 4px solid var(--crimson); border: 1px solid var(--border);
+    padding: 7px 11px; font-size: 10px; font-weight: 700;
+    max-width: 440px; width: 100%; border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==========================================================================
+     1. ULTRA-COMPACT STICKY MICRO-HUD (< 18% VERTICAL PHONE SCREEN HEIGHT)
+     ========================================================================== -->
+<header class="hud-header">
+  <div class="hud-top-row">
+    <div class="brand-title">
+      <span class="brand-badge">⚙️ OCCULT MACHINE</span>
+      <span>128³ SOUL SPLICER</span>
+    </div>
+    <div class="hud-actions">
+      <button class="btn btn-xs btn-god" id="hud-god-btn" onclick="Game.toggleGodMode()">⚡ GOD: OFF</button>
+      <button class="btn btn-xs btn-silver" onclick="UI.openModal('code-modal')">📡 CODES</button>
+      <button class="btn btn-xs btn-emerald" onclick="UI.openModal('save-modal')">💾 SAVE</button>
+    </div>
+  </div>
+
+  <!-- ROW 2: 5-COLUMN TELEMETRY BAR -->
+  <div class="hud-stats">
+    <div class="stat-pill"><span>Souls/Credits</span><b class="val-gold" id="hud-funds">◈500</b></div>
+    <div class="stat-pill"><span>Ichor Supply</span><b class="val-silver" id="hud-fuel">1,000</b></div>
+    <div class="stat-pill"><span>Owned Constructs</span><b class="val-emerald" id="hud-fleet">3</b></div>
+    <div class="stat-pill"><span>Codex</span><b class="val-gold" id="hud-codex">3/2000</b></div>
+    <div class="stat-pill"><span>Trials</span><b class="val-purple" id="hud-miles">0/150</b></div>
+  </div>
+
+  <!-- ROW 3 & 4: LOCKED 2×3 NAVIGATION GRID -->
+  <nav class="nav-grid">
+    <button class="nav-btn active" data-tab="tab-racks" onclick="UI.switchTab('tab-racks')">1. 🛡️ Owned <span class="nav-badge" id="rack-count">3</span></button>
+    <button class="nav-btn" data-tab="tab-forge" onclick="UI.switchTab('tab-forge')">2. 🎨 Soul Splicer</button>
+    <button class="nav-btn" data-tab="tab-boxes" onclick="UI.switchTab('tab-boxes')">3. 📦 Reliquaries</button>
+    <button class="nav-btn" data-tab="tab-auctions" onclick="UI.switchTab('tab-auctions')">4. 🔨 Auctions <span class="nav-badge" id="auc-timer">10s</span></button>
+    <button class="nav-btn" data-tab="tab-arena" onclick="UI.switchTab('tab-arena')">5. ⚔️ Ritual Arena</button>
+    <button class="nav-btn" data-tab="tab-command" onclick="UI.switchTab('tab-command')">6. 📜 Grand Synod</button>
+  </nav>
+</header>
+
+<main class="main-wrap">
+
+  <!-- ========================================================================
+       TAB 1: 🛡️ OWNED CONSTRUCTS (QOL BAR, 1/3/5-ENTITY FORMATIONS, TECH & ARCHONS)
+       ======================================================================== -->
+  <section id="tab-racks" class="tab-pane active">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">1. 🛡️ OWNED CONSTRUCTS // 1-ENTITY MONOLITHS, 3-ENTITY BONE TRIADS &amp; 5-ENTITY OCCULT CHOIRS</div>
+        <div class="section-sub">Collect #0001–#2000 across 15 Rarity Tiers. Tap any construct card to open the interactive 60 FPS 3D Biomechanical Turntable Inspector!</div>
+      </div>
+    </div>
+
+    <!-- QOL COMMAND BAR -->
+    <div class="qol-bar">
+      <button class="btn btn-emerald" onclick="Game.repairAll()">🔧 Repair All</button>
+      <button class="btn btn-cyan" onclick="Game.autoEquipArchons()">⚡ Auto-Equip Archons</button>
+      <button class="btn btn-gold" onclick="Game.autoFillSellerLanes()">🔨 Auto-List 5 Lanes</button>
+      <button class="btn btn-crimson" onclick="Game.salvageLowAndDupes()">♻️ Batch Salvage Dupes/Low</button>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="section-bar" style="padding: 5px 7px;">
+      <div class="btn-row">
+        <label class="chk-pill">
+          <input type="checkbox" id="filter-vault-only" onchange="UI.renderRacks()" />
+          🔒 Vaulted Only (<span id="vault-inline-count">0</span>)
+        </label>
+        <select id="filter-squad" style="width:auto; flex:1;" onchange="UI.renderRacks()">
+          <option value="ALL">All Formations</option>
+          <option value="1">💀 1-Entity Solo (1.0x)</option>
+          <option value="3">⛓️×3 Bone Triad (2.4x)</option>
+          <option value="5">👁️×5 Occult Choir (4.2x)</option>
+        </select>
+        <select id="filter-tier" style="width:auto; flex:1;" onchange="UI.renderRacks()">
+          <option value="ALL">All 15 Tiers</option>
+        </select>
+        <select id="filter-div" style="width:auto; flex:1;" onchange="UI.renderRacks()">
+          <option value="ALL">All 10 Biomech Classes</option>
+        </select>
+        <select id="sort-racks" style="width:auto; flex:1;" onchange="UI.renderRacks()">
+          <option value="VAL_DESC">Sort: Appraisal Value</option>
+          <option value="TIER_DESC">Sort: Tier (T15-T1)</option>
+          <option value="SQUAD_DESC">Sort: Squad Size (5-1)</option>
+          <option value="DEX_ASC">Sort: Codex #</option>
+          <option value="HP_ASC">Sort: Husk Integrity</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card-grid" id="rack-list"></div>
+
+    <!-- INLINE 4 BIOGENESIS TECH UPGRADES -->
+    <div class="section-bar" style="margin-top:12px;">
+      <div>
+        <div class="section-title">⚙️ BIOGENESIS &amp; OSSUARY ENGINE TECH UPGRADES</div>
+        <div class="section-sub">Upgrade Soul Harvester (+5% Tithe/lvl), Ichor Reclaimer (-2% Ichor/lvl), Bone-Pillar Hydraulic Graft (+4% Torment/lvl), and Cage Snare Matrix (+2% Capture/lvl).</div>
+      </div>
+    </div>
+    <div class="card-grid" id="tech-list"></div>
+
+    <!-- INLINE ARCHON COMMANDERS ROSTER -->
+    <div class="section-bar" style="margin-top:12px;">
+      <div>
+        <div class="section-title">👑 SYNOD ARCHON COMMANDERS ROSTER (<span id="pilot-count">0</span>)</div>
+        <div class="section-sub">Bind Archon Commanders on any construct card above to amplify Abyssal Patrol Tithes and Ritual Arena Torment.</div>
+      </div>
+    </div>
+    <div class="card-grid" id="pilot-list"></div>
+  </section>
+
+  <!-- ========================================================================
+       TAB 2: 🎨 SOUL SPLICER (CUSTOM FORGE & 5-ZONE #RRGGBB PAINT STUDIO)
+       ======================================================================== -->
+  <section id="tab-forge" class="tab-pane">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">2. 🎨 SOUL SPLICER // MULTI-ARMED GRAFTS, CRANIAL CAGES, MARBLE OSSUARIES &amp; 5-ZONE HEX STUDIO</div>
+        <div class="section-sub">Splice 1-Entity Monoliths, 3-Entity Bone Triads, or 5-Entity Occult Choirs inspired by dark biomechanical surrealism!</div>
+      </div>
+      <button class="btn btn-silver" onclick="CustomForge.randomize()">🎲 Randomize Splicing &amp; Palette</button>
+    </div>
+
+    <div class="forge-studio-grid">
+      <!-- LIVE 60 FPS 3D TURNTABLE -->
+      <div class="forge-preview-box">
+        <canvas id="forge-canvas" width="260" height="260"></canvas>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px; font-size:9px; color:var(--text-dim);">
+          <span>🖱️ Drag to Orbit 3D Construct</span>
+          <div style="display:flex; gap:3px;">
+            <button class="btn btn-xs" onclick="CustomForge.toggleSpin()">🔄 Spin</button>
+            <button class="btn btn-xs" onclick="CustomForge.toggleWireframe()">🕸️ Cage</button>
+            <button class="btn btn-xs" onclick="CustomForge.zoom(0.18)">➕</button>
+            <button class="btn btn-xs" onclick="CustomForge.zoom(-0.18)">➖</button>
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:5px;">
+          <button class="btn btn-xs btn-crimson" style="flex:1;" onclick="CustomForge.applyPreset(0)">🩸 Flayed</button>
+          <button class="btn btn-xs btn-silver" style="flex:1;" onclick="CustomForge.applyPreset(1)">🏛️ Marble</button>
+          <button class="btn btn-xs btn-gold" style="flex:1;" onclick="CustomForge.applyPreset(2)">⛓️ Cenobite</button>
+          <button class="btn btn-xs btn-emerald" style="flex:1;" onclick="CustomForge.applyPreset(3)">🧪 Necro</button>
+          <button class="btn btn-xs btn-purple" style="flex:1;" onclick="CustomForge.applyPreset(4)">🌑 Abyssal</button>
+        </div>
+        <div style="margin-top:6px; padding:6px; background:#090b10; border:1px solid var(--border); font-size:9px; line-height:1.35;" id="forge-roll-banner">
+          <b>Artisan Appraisal Roll:</b> Craft (1.35x–1.75x) • Journeyman (2x–3.5x) • Artisan (4.5x–8x) • Relic (10x–18x) • <b class="val-gold">★ MASTERWORK (25x–50x) ★</b>
+        </div>
+      </div>
+
+      <!-- MODULAR CONTROLS & 5-ZONE HEX STUDIO -->
+      <div class="forge-controls-box">
+        <div class="control-group">
+          <div class="control-label">
+            <span>1. Rarity Tier (T1–T15), Squad Formation &amp; Cranial Tubing/Braids</span>
+            <span class="val-gold" id="forge-cost-label">Cost: ◈15 + 15 Ichor</span>
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:5px;">
+            <input type="text" id="forge-custom-name" placeholder="Custom Construct / Demon Name" maxlength="32" />
+            <select id="forge-tier-sel" onchange="CustomForge.updateConfig()"></select>
+            <div>
+              <div style="font-size:8px; color:var(--gold); font-weight:800; margin-bottom:2px;">FORMATION SIZE (3 SCALES)</div>
+              <select id="forge-squad-sel" onchange="CustomForge.updateConfig()">
+                <option value="1">💀 1-Entity Solo Monolith (1.0x)</option>
+                <option value="3">⛓️×3 Bone Triad Formation (2.4x Value/Stats)</option>
+                <option value="5">👁️×5 Occult Choir Rank (4.2x Value/Stats)</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:8px; color:var(--emerald); font-weight:800; margin-bottom:2px;">CRANIAL TUBING &amp; SINEW BRAIDS (8)</div>
+              <select id="forge-beard-sel" onchange="CustomForge.updateConfig()">
+                <option value="braided_sinew_locks">Braided Sinew &amp; Tendon Locks</option>
+                <option value="arterial_hoses">Ribbed Arterial Ichor Hoses</option>
+                <option value="weeping_chains">Weeping Barbed Iron Chains</option>
+                <option value="mecha_tentacles">Segmented Biomech Tentacles</option>
+                <option value="Twin_temple_braids">Twin Temple Spliced Braids</option>
+                <option value="cervical_cables">Cervical Spine Conduit Cables</option>
+                <option value="bone_beaded_plaits">Ossified Bone-Beaded Plaits</option>
+                <option value="clean_cranium">Clean Flayed Cranial Seal</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label"><span>2. Surreal Pose, Torso Carapace, Cranial Cage, Armament &amp; Plinth</span></div>
+          <div style="display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:5px;">
+            <div>
+              <div style="font-size:8px; color:var(--text-dim);">SURREAL POSE (8)</div>
+              <select id="forge-pose-sel" onchange="CustomForge.updateConfig()">
+                <option value="crucified_ascension">Crucified Ascension Levitation</option>
+                <option value="predator_stalk">Hunched Predator Stalk</option>
+                <option value="floating_reliquary">Floating Reliquary Suspension</option>
+                <option value="agony_arch">Opisthotonic Agony Arch</option>
+                <option value="multi_arm_invocation">Multi-Armed Occult Invocation</option>
+                <option value="spire_perch">Gargoyle Spire Perch</option>
+                <option value="ossified_kneel">Penitent Ossified Kneel</option>
+                <option value="abyssal_lunge">Abyssal Executioner Lunge</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:8px; color:var(--text-dim);">TORSO / CARAPACE GRAFT (6)</div>
+              <select id="forge-armor-sel" onchange="CustomForge.updateConfig()">
+                <option value="flayed_biomech">Flayed Biomech Musculature &amp; Struts</option>
+                <option value="marble_ossuary">Cracked Classical Marble Ossuary</option>
+                <option value="ribcage_furnace">Open Thoracic Ribcage Furnace</option>
+                <option value="seraphic_graft">4-Armed Seraphic Anatomical Graft</option>
+                <option value="chitin_cathedral">Gothic Fluted Chitin Cathedral</option>
+                <option value="void_spliced">Asymmetrical Bone &amp; Piston Fusion</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:8px; color:var(--text-dim);">CRANIAL CAGE &amp; VISAGE (10)</div>
+              <select id="forge-helm-sel" onchange="CustomForge.updateConfig()">
+                <option value="iron_maiden_cage">Tall Barred Iron Maiden Head-Cage</option>
+                <option value="blind_seraph_crown">Blind Weeping Marble Mask &amp; Halo</option>
+                <option value="split_mandible_skull">Distorted Split-Mandible Skull</option>
+                <option value="monolith_visor">Pyramid Executioner Monolith Helm</option>
+                <option value="horned_reliquary">Swept Ossified Horned Reliquary</option>
+                <option value="gilded_deathmask">Classical Bronze Tragedy Deathmask</option>
+                <option value="multi_eyed_mitre">Tall Bone &amp; Ocular Lens Mitre</option>
+                <option value="spiked_halo_helm">Radial Cenobite Pin-Spiked Halo</option>
+                <option value="censor_hood">Draped Executioner Cowl &amp; Tubes</option>
+                <option value="ossified_crown">Fused Vertebrae Sovereign Crown</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:8px; color:var(--text-dim);">OCCULT ARMAMENT &amp; LIMBS (11)</div>
+              <select id="forge-weapon-sel" onchange="CustomForge.updateConfig()">
+                <option value="quad_bone_scythes">Quad Grafted Arms &amp; Bone Scythes</option>
+                <option value="great_cleaver_blade">Colossal Rusted Pyramid Great-Cleaver</option>
+                <option value="twin_flensing_hooks">Twin Hooked Chains &amp; Flensing Blades</option>
+                <option value="pillar_of_guilt">Chained Marble Pillar of Guilt</option>
+                <option value="serrated_censer_flail">Smoking Brass Censer &amp; Chain Flail</option>
+                <option value="biomech_lance">Ribbed Spinal Impaling Lance</option>
+                <option value="six_armed_claws">Six Splayed Arms &amp; Elongated Talons</option>
+                <option value="obsidian_monolith_sword">Obsidian Monolith Greatsword</option>
+                <option value="rib_spreader_halberd">Surgical Rib-Spreader Halberd</option>
+                <option value="necro_crucible_staff">Necro-Ichor Crucible Staff</option>
+                <option value="chained_guillotine">Twin Chained Guillotine Weights</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:8px; color:var(--text-dim);">DORSAL RIGGING &amp; WINGS (6)</div>
+              <select id="forge-back-sel" onchange="CustomForge.updateConfig()">
+                <option value="skeletal_seraph_wings">Swept Skeletal Seraph Bone-Wings</option>
+                <option value="cathedral_organ_pipes">Dorsal Cathedral Organ Exhaust Pipes</option>
+                <option value="torture_wheel_halo">Spiked Iron Breaking-Wheel Halo</option>
+                <option value="hanging_iron_cages">SuspendedGibbet Bone Cages</option>
+                <option value="flesh_draped_mantle">Tattered Crimson &amp; Chain Mantle</option>
+                <option value="mecha_arachnid_limbs">Dorsal Surgical Arachnid Limbs</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:8px; color:var(--text-dim);">SCENIC SACRIFICIAL PLINTH (6)</div>
+              <select id="forge-plinth-sel" onchange="CustomForge.updateConfig()">
+                <option value="ossuary_skull_mound">Ossuary Skull &amp; Bone Mound</option>
+                <option value="marble_sacrificial_altar">Cracked Marble Sacrificial Altar</option>
+                <option value="rusted_chain_abyss">Rusted Grate &amp; Chain Abyss</option>
+                <option value="biomech_spine_pillar">Biomechanical Vertebral Pillar</option>
+                <option value="boiling_ichor_basin">Boiling Necro-Ichor Font Basin</option>
+                <option value="broken_cathedral_ruins">Shattered Gothic Cathedral Ruins</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5-ZONE HEX STUDIO -->
+        <div class="control-group" id="hex-studio-zones"></div>
+
+        <div class="btn-row">
+          <button class="btn btn-silver" style="flex:1; padding:9px;" onclick="CustomForge.forgeUnit(false)">
+            ⚙️ SPLICE TO OWNED CONSTRUCTS
+          </button>
+          <button class="btn btn-gold" style="flex:1; padding:9px;" onclick="CustomForge.forgeUnit(true)">
+            💰 SPLICE &amp; LIST ON AUCTION
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TAB 3: 📦 RELIQUARIES & ICHOR DEPOT
+       ======================================================================== -->
+  <section id="tab-boxes" class="tab-pane">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">3. 📦 OSSUARY RELIQUARIES, ARCHON PODS &amp; ICHOR SUPPLY DEPOT</div>
+        <div class="section-sub">Unseal numbered biomechanical constructs (`#0001–#2000`) across 15 Rarity Tiers in 1x, 5x, or 10x batches.</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn btn-silver" onclick="Game.buyFuel(500)">🩸 +500 Ichor (◈125)</button>
+        <button class="btn btn-silver" onclick="Game.buyFuel(2500)">🩸 +2.5K Ichor (◈625)</button>
+        <button class="btn btn-silver" onclick="Game.buyFuel(10000)">🩸 +10K Ichor (◈2,500)</button>
+      </div>
+    </div>
+
+    <!-- RECENT UNBOX PULL SHOWCASE -->
+    <div id="crate-pull-banner" style="display:none; margin-bottom:10px;">
+      <div class="section-bar" style="border-left-color:var(--gold);">
+        <div class="section-title" style="color:var(--gold);">✨ LATEST RELIQUARY MANIFESTATIONS</div>
+        <button class="btn btn-xs" onclick="document.getElementById('crate-pull-banner').style.display='none'">✖ Hide</button>
+      </div>
+      <div class="card-grid" id="crate-pull-grid"></div>
+    </div>
+
+    <div class="card-grid" id="warbox-list"></div>
+
+    <div class="section-bar" style="margin-top:12px;">
+      <div>
+        <div class="section-title">👑 SYNOD ARCHON COMMANDER SARCOPHAGI</div>
+        <div class="section-sub">Awaken High Inquisitors, Flesh-Architects, and Synod Hierophants to command your constructs.</div>
+      </div>
+    </div>
+    <div class="card-grid" id="pilotbox-list"></div>
+  </section>
+
+  <!-- ========================================================================
+       TAB 4: 🔨 AUCTIONS (1-LANE BARGAIN BUYER + 5-LANE SYNDICATE SELLER)
+       ======================================================================== -->
+  <section id="tab-auctions" class="tab-pane">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">4A. 🔨 1-LANE BARGAIN BUYER AUCTION (10.0s LIVE + 3.0s VERDICT)</div>
+        <div class="section-sub">Starts at 12%–20% value! Use the BID buttons while time remains (&gt;0.0s) to win undervalued constructs and flip below!</div>
+      </div>
+    </div>
+
+    <div class="snipe-spotlight" id="buyer-spotlight-card">
+      <div class="unit-thumb-wrap" style="height:122px;" onclick="Inspector.open('BUYER', 0)">
+        <img class="unit-thumb" id="buyer-thumb" src="" alt="Bargain Construct Lot" />
+        <span class="tier-tag" id="buyer-tier-tag">T1</span>
+        <span class="squad-tag" id="buyer-squad-tag" style="color:#cbd5e1;">💀 SOLO</span>
+        <span class="dex-tag" id="buyer-dex-tag">#0001</span>
+        <span class="inspect-hint">🔍 3D</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:5px; min-width:0;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:4px;">
+          <div class="unit-title" style="font-size:12px;" id="buyer-unit-title">Loading Lot...</div>
+          <span id="buyer-timer-badge" style="background:#1e293b; border:1px solid #fff; color:#fff; padding:2px 6px; font-weight:900; font-size:10px; font-family:'Courier New',monospace;">
+            ⏱️ 10.0s
+          </span>
+        </div>
+
+        <div class="intermission-banner" id="buyer-verdict-banner">
+          <span id="buyer-verdict-text">LOT CLOSED</span>
+          <span id="buyer-verdict-countdown" style="font-family:'Courier New',monospace;">NEXT IN 3.0s</span>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:4px; background:#07080c; border:1px solid var(--border); padding:5px; font-size:9px;">
+          <div>True Val: <b class="val-gold" id="buyer-true-val">◈0</b></div>
+          <div>Current Bid: <b class="val-silver" id="buyer-cur-bid">◈0</b></div>
+          <div>Est. Profit: <b class="val-emerald" id="buyer-flip-profit">+◈0</b></div>
+          <div>High Bidder: <b id="buyer-high-bidder">Occult Broker</b></div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-emerald" id="buyer-bid-btn-1" style="flex:1; padding:7px 4px;" onclick="Game.bidOnBuyerAuction(1)">
+            🔨 BID (+◈1)
+          </button>
+          <button class="btn btn-gold" id="buyer-bid-btn-5" style="flex:1; padding:7px 4px;" onclick="Game.bidOnBuyerAuction(5)">
+            🔨 BID (+◈5)
+          </button>
+          <button class="btn btn-purple" id="buyer-bid-btn-25" style="flex:1; padding:7px 4px;" onclick="Game.bidOnBuyerAuction(25)">
+            🔨 BID (+◈25)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-bar">
+      <div>
+        <div class="section-title">4B. 💰 5-LANE SYNDICATE SELLER AUCTIONS (2x–20x BID WARS!)</div>
+        <div class="section-sub">List up to 5 Owned Constructs! 20.0s timer | 40% start bid | 1.5% chance for 2x–20x [BID WAR] Spike!</div>
+      </div>
+      <button class="btn btn-gold" onclick="Game.autoFillSellerLanes()">🔨 Auto-List 5 Lanes</button>
+    </div>
+    <div class="card-grid" id="seller-auction-list"></div>
+  </section>
+
+  <!-- ========================================================================
+       TAB 5: ⚔️ RITUAL ARENA & ABYSSAL PATROLS (1v1/3v3/5v5 + 6 SECTORS)
+       ======================================================================== -->
+  <section id="tab-arena" class="tab-pane">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">5A. ⚔️ 1v1 / 3v3 / 5v5 RITUAL ARENA &amp; LABYRINTH CLASH</div>
+        <div class="section-sub">2D6 Dice + Counter Triangle (Executioner [A] &gt; Ossuary Bastion [B] &gt; Seraph Stalker [C] &gt; Executioner +45% DMG) + 55% Credit Spoils + 45% Construct Capture!</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn btn-silver" onclick="Arena.startMatch(1)">💀 1v1 Rite Duel</button>
+        <button class="btn btn-gold" onclick="Arena.startMatch(3)">⛓️ 3v3 Triad Clash</button>
+        <button class="btn btn-crimson" onclick="Arena.startMatch(5)">👁️ 5v5 Choir War</button>
+      </div>
+    </div>
+
+    <div class="arena-grid">
+      <div class="arena-side">
+        <div class="section-title" style="margin-bottom:5px;">🛡️ YOUR SPLICED CONSTRUCTS</div>
+        <div id="arena-player-team"></div>
+      </div>
+
+      <div class="arena-center">
+        <div style="font-size:10px; font-weight:800; color:var(--gold); text-align:center;" id="arena-status-banner">
+          Select 1v1, 3v3, or 5v5 above to unleash your Biomechanical Constructs in the Ritual Arena!
+        </div>
+        <div class="dice-tray">
+          <div class="die-box" id="die-1">6</div>
+          <div class="die-box" id="die-2">6</div>
+        </div>
+        <div class="btn-row" style="justify-content:center;">
+          <button class="btn btn-crimson" onclick="Arena.issueOrder('CHARGE')">🗡️ Cleaver Execution</button>
+          <button class="btn btn-cyan" onclick="Arena.issueOrder('VOLLEY')">⛓️ Hooked Chain Snare</button>
+          <button class="btn btn-purple" onclick="Arena.issueOrder('ARCANE')">👁️ Necro-Ichor Nova</button>
+          <button class="btn btn-gold" onclick="Arena.issueOrder('WALL')">🏛️ Marble Cage Aegis</button>
+          <button class="btn btn-emerald" onclick="Arena.issueOrder('RALLY')">🩸 Suture &amp; Graft</button>
+        </div>
+        <div class="combat-log" id="arena-log"></div>
+      </div>
+
+      <div class="arena-side">
+        <div class="section-title" style="margin-bottom:5px; color:var(--crimson);">🎯 RIVAL COVENANT CONSTRUCTS</div>
+        <div id="arena-enemy-team"></div>
+      </div>
+    </div>
+
+    <!-- 6 ABYSSAL SECTOR PATROLS -->
+    <div class="section-bar" style="margin-top:12px;">
+      <div>
+        <div class="section-title">5B. 🌑 6 ABYSSAL LABYRINTH SECTOR PATROLS</div>
+        <div class="section-sub">Deploy Owned Constructs &amp; Archons to abyssal sanctums for automated Soul Tithes.</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn btn-emerald" onclick="Game.assignAllIdleToPatrol()">🚩 Deploy All Idle</button>
+        <button class="btn btn-crimson" onclick="Game.recallAllPatrols()">🛑 Recall All</button>
+      </div>
+    </div>
+    <div class="card-grid" id="sector-list"></div>
+  </section>
+
+  <!-- ========================================================================
+       TAB 6: 📜 GRAND SYNOD (AUTOMATIONS, 6 COMMISSIONS & 150 TRIALS)
+       ======================================================================== -->
+  <section id="tab-command" class="tab-pane">
+    <div class="section-bar">
+      <div>
+        <div class="section-title">6. 📜 GRAND SYNOD: AUTOMATIONS &amp; COVENANT TITHES</div>
+        <div class="section-sub">Toggle Automations, fulfill 6 Rotating Synod Commissions, and claim 150 Occult Trials across 6 Books.</div>
+      </div>
+      <div class="btn-row" style="width:auto;">
+        <button class="btn" id="tog-automarch" onclick="Game.toggleAuto('autoMarch')">🤖 Auto-March: OFF</button>
+        <button class="btn" id="tog-autorepair" onclick="Game.toggleAuto('autoRepair')">🔧 Auto-Repair: OFF</button>
+        <button class="btn" id="tog-autosupply" onclick="Game.toggleAuto('autoSupply')">🩸 Auto-Supply: OFF</button>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin: 6px 0;">📜 6 ROTATING SYNOD COMMISSIONS (CREDITS + FREE BONUS CONSTRUCT)</div>
+    <div class="card-grid" id="commission-list"></div>
+
+    <div class="section-bar" style="margin-top:12px;">
+      <div class="section-title">🏆 150 GRAND SYNOD CHRONICLE TRIALS</div>
+      <div class="btn-row" style="width:auto;">
+        <select id="mile-book-filter" style="width:auto;" onchange="UI.renderMilestones()">
+          <option value="ALL">All 6 Books (150)</option>
+          <option value="0">Book I: Flesh Harvester (1-25)</option>
+          <option value="1">Book II: Soul Splicer (26-50)</option>
+          <option value="2">Book III: RitualExecutioner (51-75)</option>
+          <option value="3">Book IV: Synod Treasury (76-100)</option>
+          <option value="4">Book V: Reliquary Broker (101-125)</option>
+          <option value="5">Book VI: Demiurge Codex (126-150)</option>
+        </select>
+        <button class="btn btn-gold" onclick="Game.claimAllMilestones()">✨ Claim All Ready</button>
+      </div>
+    </div>
+    <div class="card-grid" id="milestone-list"></div>
+  </section>
+
+</main>
+
+<!-- 3D VOXEL INSPECTOR MODAL (#inspector-canvas) -->
+<div class="modal-backdrop" id="inspect-modal">
+  <div class="modal-box">
+    <div>
+      <canvas id="inspector-canvas" width="260" height="260"></canvas>
+      <div style="display:flex; justify-content:space-between; margin-top:5px; font-size:9px; color:var(--text-dim);">
+        <span>🖱️ Drag to Orbit 3D Construct</span>
+        <span id="inspect-vox-stats">128³ Snapshot</span>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; justify-content:space-between; gap:7px; min-width:0;">
+      <div>
+        <div class="section-title" id="insp-name" style="font-size:14px;">Construct Name</div>
+        <div id="insp-sub" style="font-size:10px; color:var(--gold); margin:3px 0 6px;">Covenant &amp; Biomechanical Class</div>
+        <div id="insp-details" style="font-size:10px; line-height:1.5; background:var(--bg-deep); padding:7px; border:1px solid var(--border);"></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:5px;">
+        <div class="btn-row">
+          <button class="btn btn-silver" style="flex:1;" onclick="Inspector.toggleSpin()">🔄 Spin</button>
+          <button class="btn btn-gold" style="flex:1;" onclick="Inspector.zoom(0.18)">➕ Zoom</button>
+          <button class="btn btn-gold" style="flex:1;" onclick="Inspector.zoom(-0.18)">➖ Out</button>
+          <button class="btn btn-cyan" style="flex:1;" onclick="Inspector.downloadPNG()">📸 PNG</button>
+        </div>
+        <div style="background:var(--bg-deep); padding:5px; border:1px solid var(--border); font-size:9px; display:flex; justify-content:space-between; align-items:center; gap:5px;">
+          <div style="overflow:hidden; text-overflow:ellipsis;"><b>Trade Code:</b> <code id="insp-code" style="color:#fff;">OM-001</code></div>
+          <button class="btn btn-xs btn-emerald" onclick="Inspector.copyTradeCode()">📋 Copy</button>
+        </div>
+        <button class="btn btn-crimson" style="padding:8px;" onclick="Inspector.close()">✖ Close 3D Inspector</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BASE36 TRADE CODE MODAL -->
+<div class="modal-backdrop" id="code-modal">
+  <div class="modal-box" style="grid-template-columns: minmax(0, 1fr); max-width: 460px;">
+    <div>
+      <div class="section-title">📡 BASE36 SOUL CODEC TRANSCEIVER</div>
+      <div class="section-sub" style="margin:5px 0 8px;">
+        Import any Collector Construct Code (<code>OM-XXX</code>), Custom Spliced Construct Code (<code>OMC-...</code>), or Archon Code (<code>SYN-XXXX</code>).
+      </div>
+      <div style="display:flex; gap:5px; margin-bottom:8px;">
+        <input type="text" id="trade-code-input" placeholder="Paste OM-..., OMC-..., or SYN-..." style="flex:1;" />
+        <button class="btn btn-emerald" onclick="Game.importTradeCode()">📥 Import</button>
+      </div>
+      <button class="btn btn-crimson" style="width:100%;" onclick="UI.closeModal('code-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- SAVE / LOAD MODAL -->
+<div class="modal-backdrop" id="save-modal">
+  <div class="modal-box" style="grid-template-columns: minmax(0, 1fr); max-width: 480px;">
+    <div>
+      <div class="section-title">💾 SYNOD ARCHIVE SAVE VAULT</div>
+      <div class="section-sub" style="margin:5px 0 8px;">
+        Auto-saves every 5 seconds with thumbnails stripped so localStorage never overflows.
+      </div>
+      <div class="btn-row" style="margin-bottom:8px;">
+        <button class="btn btn-emerald" style="flex:1;" onclick="SaveSystem.saveToLocal(true)">💾 Save Now</button>
+        <button class="btn btn-silver" style="flex:1;" onclick="SaveSystem.exportSaveString()">📤 Export</button>
+        <button class="btn btn-gold" style="flex:1;" onclick="SaveSystem.importSaveString()">📥 Import</button>
+      </div>
+      <textarea id="save-string-box" rows="4" placeholder="Backup Save String..." style="width:100%; background:#050608; color:#fff; border:1px solid var(--border); padding:6px; font-family:monospace; font-size:9px; margin-bottom:8px;"></textarea>
+      <div style="display:flex; justify-content:space-between; gap:6px;">
+        <button class="btn btn-crimson" onclick="SaveSystem.hardReset()">⚠️ Wipe Save</button>
+        <button class="btn btn-silver" onclick="UI.closeModal('save-modal')">✖ Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-wrap"></div>
+
+<script>
+/* ============================================================================
+   1. 15 RARITY TIERS, 10 OCCULT COVENANTS, 10 BIOMECH CLASSES & 2,000 CODEX
+   ============================================================================ */
+const TIERS = [
+  { id: 0,  code: 'T1',  name: 'Stitch-Husk',        finish: 'Rusted Wire & Sinew',     val: 15,      hp: 115,    atk: 16,   color: '#94a3b8', bone: [188, 176, 158], emissive: [239, 68, 68] },
+  { id: 1,  code: 'T2',  name: 'Ossuary Thrall',     finish: 'Calcified Marrow-Plate',  val: 45,      hp: 175,    atk: 25,   color: '#cbd5e1', bone: [204, 194, 176], emissive: [245, 158, 11] },
+  { id: 2,  code: 'T3',  name: 'Caged Penitent',     finish: 'Wrought Iron Gibbet',     val: 140,     hp: 265,    atk: 40,   color: '#22c55e', bone: [176, 162, 148], emissive: [16, 185, 129] },
+  { id: 3,  code: 'T4',  name: 'Flayed Cenobite',    finish: 'Arterial Brass & Hooks',  val: 420,     hp: 410,    atk: 64,   color: '#10b981', bone: [216, 206, 192], emissive: [239, 68, 68] },
+  { id: 4,  code: 'T5',  name: 'Marrow Automaton',   finish: 'Hydraulic Bone-Strut',    val: 1250,    hp: 650,    atk: 98,   color: '#38bdf8', bone: [224, 218, 208], emissive: [56, 189, 248] },
+  { id: 5,  code: 'T6',  name: 'Marble Reliquary',   finish: 'Cracked Carrara & Gold',  val: 3800,    hp: 1040,   atk: 155,  color: '#facc15', bone: [242, 238, 232], emissive: [245, 176, 65] },
+  { id: 6,  code: 'T7',  name: 'Choir Inquisitor',   finish: 'Sanctified Bronze-Flesh', val: 11500,   hp: 1680,   atk: 248,  color: '#a855f7', bone: [212, 196, 174], emissive: [168, 85, 247] },
+  { id: 7,  code: 'T8',  name: 'Grafted Seraph',     finish: 'Six-Winged Bone-Alabaster',val: 35000,  hp: 2800,   atk: 405,  color: '#d946ef', bone: [238, 232, 224], emissive: [244, 63, 94] },
+  { id: 8,  code: 'T9',  name: 'Hellforge Colossus', finish: 'Obsidian & Necro-Ichor',  val: 95000,   hp: 4650,   atk: 660,  color: '#f59e0b', bone: [148, 138, 132], emissive: [16, 185, 129] },
+  { id: 9,  code: 'T10', name: 'Archon Reliquary',   finish: 'Gilded Cathedral Ivory',  val: 250000,  hp: 7900,   atk: 1090, color: '#ef4444', bone: [246, 240, 226], emissive: [239, 68, 68] },
+  { id: 10, code: 'T11', name: 'Labyrinth Executioner',finish:'Pyramid Rust-Monolith',  val: 600000,  hp: 13000,  atk: 1780, color: '#06b6d4', bone: [192, 178, 166], emissive: [245, 158, 11] },
+  { id: 11, code: 'T12', name: 'Spliced Sovereign',  finish: 'Crimson Velvet & Bone',   val: 1250000, hp: 22000,  atk: 2900, color: '#ec4899', bone: [240, 234, 222], emissive: [236, 72, 153] },
+  { id: 12, code: 'T13', name: 'Abyssal Hierophant', finish: 'Void- Marble & Mercury',  val: 2200000, hp: 37500,  atk: 4750, color: '#fde047', bone: [222, 226, 234], emissive: [250, 204, 21] },
+  { id: 13, code: 'T14', name: 'Apocrypha Apostle',  finish: 'Eclipse Gold & Sinew',    val: 3500000, hp: 64000,  atk: 7800, color: '#67e8f9', bone: [248, 242, 228], emissive: [56, 189, 248] },
+  { id: 14, code: 'T15', name: 'Primeval Demiurge',  finish: 'Astral Ossuary Perfection',val: 5000000,hp: 115000, atk: 13000,color: '#ffffff', bone: [252, 250, 246], emissive: [255, 255, 255] }
+];
+
+const FACTIONS = [
+  { id: 0, name: 'Covenant of Flayed Sinew',   flesh: [148, 42, 48],  bone: [222, 212, 194], iron: [58, 62, 70],   cloak: [118, 18, 26],  ichor: [245, 176, 65] },
+  { id: 1, name: 'Sanctum of Cracked Marble',  flesh: [132, 76, 78],  bone: [242, 238, 232], iron: [76, 82, 94],   cloak: [142, 24, 34],  ichor: [250, 204, 21] },
+  { id: 2, name: 'Order of the Rusted Pyramid',flesh: [128, 64, 54],  bone: [196, 182, 162], iron: [92, 52, 38],   cloak: [78, 28, 24],   ichor: [239, 68, 68] },
+  { id: 3, name: 'Labyrinth of Weeping Chains',flesh: [112, 48, 58],  bone: [208, 202, 192], iron: [46, 50, 58],   cloak: [28, 30, 38],   ichor: [16, 185, 129] },
+  { id: 4, name: 'Choir of the Blind Seraph',  flesh: [158, 54, 62],  bone: [246, 242, 234], iron: [112, 96, 68],  cloak: [156, 22, 36],  ichor: [255, 255, 255] },
+  { id: 5, name: 'Hellspawn Necro-Legion',     flesh: [64, 68, 76],   bone: [218, 214, 204], iron: [42, 46, 54],   cloak: [178, 18, 28],  ichor: [16, 185, 129] },
+  { id: 6, name: 'Synod of Brass & Censer',    flesh: [138, 58, 52],  bone: [228, 214, 188], iron: [136, 98, 52],  cloak: [96, 20, 28],   ichor: [245, 158, 11] },
+  { id: 7, name: 'Abyssal Spine Architects',   flesh: [94, 44, 68],   bone: [198, 206, 218], iron: [48, 56, 68],   cloak: [58, 22, 72],   ichor: [56, 189, 248] },
+  { id: 8, name: 'Golgotha Bone-Graft Guild',  flesh: [152, 48, 42],  bone: [214, 198, 172], iron: [68, 58, 52],   cloak: [108, 28, 22],  ichor: [239, 68, 68] },
+  { id: 9, name: 'Primeval Demiurge Basilica', flesh: [164, 38, 48],  bone: [248, 244, 236], iron: [88, 94, 108],  cloak: [136, 16, 28],  ichor: [245, 176, 65] }
+];
+
+const ARCHETYPES = [
+  { id: 0, key: 'SERAPH_SPLICER',   group: 'A', pose: 'multi_arm_invocation', armor: 'seraphic_graft',   helm: 'blind_seraph_crown',  weapon: 'quad_bone_scythes',      back: 'skeletal_seraph_wings', plinth: 'marble_sacrificial_altar', name: 'Four-Armed Seraph Splicer' },
+  { id: 1, key: 'PYRAMID_EXEC',     group: 'A', pose: 'abyssal_lunge',        armor: 'flayed_biomech',   helm: 'monolith_visor',      weapon: 'great_cleaver_blade',    back: 'flesh_draped_mantle',   plinth: 'rusted_chain_abyss',       name: 'Monolith Great-Cleaver Executioner' },
+  { id: 2, key: 'MAIDEN_PENITENT',  group: 'B', pose: 'crucified_ascension',  armor: 'marble_ossuary',   helm: 'iron_maiden_cage',    weapon: 'pillar_of_guilt',        back: 'torture_wheel_halo',    plinth: 'ossuary_skull_mound',      name: 'Caged Iron-Maiden Reliquary' },
+  { id: 3, key: 'CENOBITE_FLAYER',  group: 'C', pose: 'floating_reliquary',   armor: 'ribcage_furnace',  helm: 'spiked_halo_helm',    weapon: 'twin_flensing_hooks',    back: 'hanging_iron_cages',    plinth: 'rusted_chain_abyss',       name: 'Spiked Cenobite Chain-Flayer' },
+  { id: 4, key: 'CHITIN_ARCHON',    group: 'B', pose: 'spire_perch',          armor: 'chitin_cathedral', helm: 'multi_eyed_mitre',    weapon: 'serrated_censer_flail',  back: 'cathedral_organ_pipes', plinth: 'broken_cathedral_ruins',   name: 'Cathedral Organ-Pipe Hierophant' },
+  { id: 5, key: 'ARACHNID_SURGEON', group: 'C', pose: 'predator_stalk',       armor: 'void_spliced',     helm: 'split_mandible_skull',weapon: 'six_armed_claws',        back: 'mecha_arachnid_limbs',  plinth: 'biomech_spine_pillar',     name: 'Six-Armed Arachnid Graft-Surgeon' },
+  { id: 6, key: 'MARBLE_MARTYR',    group: 'B', pose: 'ossified_kneel',       armor: 'marble_ossuary',   helm: 'gilded_deathmask',    weapon: 'chained_guillotine',     back: 'torture_wheel_halo',    plinth: 'marble_sacrificial_altar', name: 'Weeping Deathmask Martyr' },
+  { id: 7, key: 'HELLSPAWN_REAPER', group: 'A', pose: 'spire_perch',          armor: 'flayed_biomech',   helm: 'horned_reliquary',    weapon: 'obsidian_monolith_sword',back: 'flesh_draped_mantle',   plinth: 'boiling_ichor_basin',      name: 'Chain-Cloaked Hellspawn Reaper' },
+  { id: 8, key: 'FURNACE_GOLIATH',  group: 'B', pose: 'agony_arch',           armor: 'ribcage_furnace',  helm: 'censor_hood',         weapon: 'rib_spreader_halberd',   back: 'cathedral_organ_pipes', plinth: 'ossuary_skull_mound',      name: 'Thoracic Furnace Goliath' },
+  { id: 9, key: 'DEMIURGE_APOSTLE', group: 'C', pose: 'crucified_ascension',  armor: 'seraphic_graft',   helm: 'ossified_crown',      weapon: 'necro_crucible_staff',   back: 'skeletal_seraph_wings', plinth: 'biomech_spine_pillar',     name: 'Primeval Demiurge Apostle' }
+];
+
+const TRACE_STYLES = [
+  'braided_sinew_locks', 'arterial_hoses', 'weeping_chains', 'mecha_tentacles',
+  'Twin_temple_braids', 'cervical_cables', 'bone_beaded_plaits', 'clean_cranium'
+];
+
+const SQUAD_CFG = {
+  1: { mult: 1.0, badge: '💀 SOLO',    color: '#cbd5e1', title: '1-Entity Solo Monolith' },
+  3: { mult: 2.4, badge: '⛓️×3 TRIAD', color: '#10b981', title: '3-Entity Bone Triad' },
+  5: { mult: 4.2, badge: '👁️×5 CHOIR', color: '#f5b041', title: '5-Entity Occult Choir' }
+};
+
+const QUICK_SWATCHES = [
+  '#942A30', '#EDE8DF', '#3A3E46', '#76121A', '#F5B041', '#10B981',
+  '#5C3426', '#D8E0EC', '#1E222A', '#B91C1C', '#A855F7', '#FFFFFF'
+];
+
+const OCCULT_PRESETS = [
+  ['#942A30', '#DECAB2', '#3A3E46', '#76121A', '#EF4444'], // Flayed Sinew & Arterial Crimson
+  ['#844C4E', '#F4F0EA', '#58606E', '#8E1822', '#F5B041'], // Cracked Classical Marble & Gold
+  ['#5E3A34', '#C4B6A2', '#5C3426', '#22242C', '#10B981'], // Cenobite Rusted Iron & Necro-Light
+  ['#40444C', '#D6D2C8', '#2A2E36', '#B2121C', '#10B981'], // Hellspawn Necro-Plasmal Cloak
+  ['#5E2C44', '#C6CEDB', '#303844', '#3A1648', '#38BDF8']  // Abyssal Demiurge Obsidian & Mercury
+];
+
+const ARTISAN_GRADES = [
+  { id: 0, name: 'Craft',                 minM: 1.35, maxM: 1.75, chance: 0.50, color: '#94a3b8' },
+  { id: 1, name: 'Journeyman',            minM: 2.00, maxM: 3.50, chance: 0.25, color: '#34d399' },
+  { id: 2, name: 'Artisan',               minM: 4.50, maxM: 8.00, chance: 0.14, color: '#38bdf8' },
+  { id: 3, name: 'Relic',                 minM: 10.0, maxM: 18.0, chance: 0.07, color: '#c084fc' },
+  { id: 4, name: '★ MASTERWORK ★',        minM: 25.0, maxM: 50.0, chance: 0.04, color: '#f5b041' }
+];
+
+const SECTORS = [
+  { id: 0, name: 'Catacombs of Weeping Marble', minTier: 0,  cycleSec: 8,  baseReward: 45,     fuelCost: 4,  desc: 'Harvest calcified relics and bone-dust from sunken classical ossuaries.' },
+  { id: 1, name: 'Rusted Ward of the Cenobites',minTier: 2,  cycleSec: 11, baseReward: 180,    fuelCost: 8,  desc: 'Patrol chain-hung surgical corridors echoing with iron hooks and bells.' },
+  { id: 2, name: 'Basilica of the Blind Seraph',minTier: 4,  cycleSec: 14, baseReward: 850,    fuelCost: 14, desc: 'Collect sacred arterial ichor beneath towering six-winged marble statues.' },
+  { id: 3, name: 'Flesh-Foundry of Golgotha',   minTier: 7,  cycleSec: 17, baseReward: 5200,   fuelCost: 24, desc: 'Splice multi-armed biomechanical titans inside roaring bone furnaces.' },
+  { id: 4, name: 'Labyrinth of the Red Pyramid',minTier: 10, cycleSec: 20, baseReward: 46000,  fuelCost: 40, desc: 'March through rust-crusted executioner chambers and wire-mesh abysses.' },
+  { id: 5, name: 'Sanctum of the Demiurge',     minTier: 12, cycleSec: 24, baseReward: 390000, fuelCost: 65, desc: 'Commune with Primeval Demiurge monoliths at the core of the Occult Machine.' }
+];
+
+function fmtNum(n) {
+  return Math.floor(Number(n) || 0).toLocaleString('en-US');
+}
+
+function hexToRgb(hex, fallback = [222, 212, 194]) {
+  if (!hex || typeof hex !== 'string') return fallback;
+  const c = hex.trim().replace(/^#/, '');
+  if (/^[0-9A-Fa-f]{6}$/.test(c)) {
+    return [parseInt(c.slice(0,2),16), parseInt(c.slice(2,4),16), parseInt(c.slice(4,6),16)];
+  }
+  return fallback;
+}
+
+function calcCodexNum(tier, faction, division, squadSize = 1) {
+  const base = ((tier % 15) * 67 + (faction % 10) * 13 + (division % 10) * 3 + (squadSize === 5 ? 2 : squadSize === 3 ? 1 : 0)) % 1000;
+  const offset = (squadSize > 1 || tier >= 10) ? 1000 : 0;
+  return Math.max(1, Math.min(2000, offset + base + 1));
+}
+
+function decodeCodexNum(dexNum) {
+  const d = Math.max(1, Math.min(2000, dexNum | 0)) - 1;
+  return {
+    tier: d % 15,
+    faction: Math.floor(d / 15) % 10,
+    division: Math.floor(d / 150) % 10,
+    squadSize: d >= 1400 ? 5 : (d >= 800 ? 3 : 1),
+    beard: TRACE_STYLES[d % TRACE_STYLES.length]
+  };
+}
+
+/* ============================================================================
+   2. SINGLE SHARED 128³ VOXEL KERNEL + SETH SIRO ANTON BIOMECH SCULPTOR
+   ============================================================================ */
+class VoxelOccultEngine {
+  constructor() {
+    this.thumbCanvas = document.createElement('canvas');
+    this.thumbCanvas.width = 120;
+    this.thumbCanvas.height = 120;
+    this.thumbCtx = this.thumbCanvas.getContext('2d');
+
+    this.workCanvas = document.createElement('canvas');
+    this.workCanvas.width = 260;
+    this.workCanvas.height = 260;
+    this.workCtx = this.workCanvas.getContext('2d');
+    this.imgData = this.workCtx.createImageData(260, 260);
+    this.pixels = new Uint32Array(this.imgData.data.buffer);
+    this.zBuf = new Float32Array(260 * 260);
+
+    this.grid = new Uint8Array(128 * 128 * 128);
+    this.stampGrid = new Uint16Array(128 * 128 * 128);
+    this.currentStamp = 1;
+
+    this.occupiedList = new Int32Array(220000);
+    this.occupiedCount = 0;
+
+    const MAX_SURF = 110000;
+    this.surfX = new Int16Array(MAX_SURF);
+    this.surfY = new Int16Array(MAX_SURF);
+    this.surfZ = new Int16Array(MAX_SURF);
+    this.surfColTop = new Uint32Array(MAX_SURF);
+    this.surfColLeft = new Uint32Array(MAX_SURF);
+    this.surfColRight = new Uint32Array(MAX_SURF);
+    this.surfCount = 0;
+
+    this.paletteRGB = new Uint32Array(256);
+    this.materialPriority = new Uint8Array(256);
+    this.isEmissive = new Uint8Array(256);
+    this.wireframeMode = false;
+  }
+
+  clearGrid() {
+    this.currentStamp++;
+    if (this.currentStamp >= 65530) {
+      this.stampGrid.fill(0);
+      this.currentStamp = 1;
+    }
+    this.occupiedCount = 0;
+    this.surfCount = 0;
+  }
+
+  packRGB(r, g, b) {
+    const cr = Math.max(0, Math.min(255, r | 0));
+    const cg = Math.max(0, Math.min(255, g | 0));
+    const cb = Math.max(0, Math.min(255, b | 0));
+    return (255 << 24) | (cb << 16) | (cg << 8) | cr;
+  }
+
+  setupPalette(unit) {
+    const tData = TIERS[unit.tier] || TIERS[0];
+    const fac = FACTIONS[unit.faction || 0] || FACTIONS[0];
+    this.isEmissive.fill(0);
+    this.materialPriority.fill(1);
+
+    const fillRamp = (startIdx, count, r, g, b, prio, emis = 0) => {
+      for (let i = 0; i < count; i++) {
+        const t = count > 1 ? (i / (count - 1)) : 0.5;
+        const shade = 0.52 + t * 0.68;
+        this.paletteRGB[startIdx + i] = this.packRGB(r * shade, g * shade, b * shade);
+        this.materialPriority[startIdx + i] = prio;
+        this.isEmissive[startIdx + i] = emis;
+      }
+    };
+
+    const hexes = unit.customHexColors;
+    const cFlesh = hexes ? hexToRgb(hexes[0], fac.flesh) : fac.flesh;
+    const cBone  = hexes ? hexToRgb(hexes[1], fac.bone)  : fac.bone;
+    const cIron  = hexes ? hexToRgb(hexes[2], fac.iron)  : fac.iron;
+    const cCloak = hexes ? hexToRgb(hexes[3], fac.cloak) : fac.cloak;
+    const cIchor = hexes ? hexToRgb(hexes[4], fac.ichor) : tData.emissive;
+
+    fillRamp(1, 15, 22, 24, 30, 1, 0);                               // Obsidian Altar Base Trim
+    fillRamp(16, 16, cIron[0], cIron[1], cIron[2], 5, 0);            // Zone 3: Rusted Iron, Cages, Chains & Cleavers
+    fillRamp(32, 16, cBone[0], cBone[1], cBone[2], 8, 0);            // Zone 2: Ossified Bone, Classical Marble & Skulls
+    fillRamp(48, 16, cFlesh[0], cFlesh[1], cFlesh[2], 7, 0);         // Zone 1: Flayed Musculature & Sinew Grafts
+    fillRamp(64, 16, cCloak[0], cCloak[1], cCloak[2], 6, 0);         // Zone 4: Tattered Crimson Vestments & Mantle
+    fillRamp(80, 16, 184, 146, 72, 9, 0);                            // Antique Occult Brass & Reliquary Filigree
+    fillRamp(96, 16, cIchor[0], cIchor[1], cIchor[2], 10, 1);        // Zone 5: Glowing Necro-Ichor, Halo & Furnace Core
+    fillRamp(112, 16, Math.max(18, cBone[0]-42), Math.max(18, cBone[1]-42), Math.max(18, cBone[2]-42), 7, 0); // Aged Rib & Vertebral Shadow Bone
+    fillRamp(128, 16, 245, 196, 68, 9, 1);                           // Synod Brass Seal Plate
+  }
+
+  setVoxel(x, y, z, colIdx) {
+    const ix = x | 0, iy = y | 0, iz = z | 0;
+    if (ix < 1 || ix >= 127 || iy < 1 || iy >= 127 || iz < 1 || iz >= 127 || colIdx <= 0) return;
+    const idx = (iy << 14) | (iz << 7) | ix;
+    if (this.stampGrid[idx] !== this.currentStamp) {
+      this.stampGrid[idx] = this.currentStamp;
+      this.grid[idx] = colIdx;
+      if (this.occupiedCount < 219990) {
+        this.occupiedList[this.occupiedCount++] = idx;
+      }
+    } else if (this.materialPriority[colIdx] >= this.materialPriority[this.grid[idx]]) {
+      this.grid[idx] = colIdx;
+    }
+  }
+
+  fillShellBox(x0, y0, z0, x1, y1, z1, baseCol, span = 8) {
+    const ax0 = Math.max(1, Math.min(x0, x1) | 0);
+    const ax1 = Math.min(126, Math.max(x0, x1) | 0);
+    const ay0 = Math.max(1, Math.min(y0, y1) | 0);
+    const ay1 = Math.min(126, Math.max(y0, y1) | 0);
+    const az0 = Math.max(1, Math.min(z0, z1) | 0);
+    const az1 = Math.min(126, Math.max(z0, z1) | 0);
+
+    for (let y = ay0; y <= ay1; y++) {
+      const yEdge = (y === ay0 || y === ay1);
+      for (let z = az0; z <= az1; z++) {
+        const zEdge = (z === az0 || z === az1);
+        for (let x = ax0; x <= ax1; x++) {
+          if (yEdge || zEdge || x === ax0 || x === ax1) {
+            this.setVoxel(x, y, z, baseCol + (((x + y + z) * 3) % span));
+          }
+        }
+      }
+    }
+  }
+
+  fillShellCylinder(cx, y0, cz, r, h, baseCol, span = 8) {
+    const ir = Math.ceil(r);
+    const r2 = r * r;
+    const innerR2 = Math.max(0, (r - 1.6) * (r - 1.6));
+    const ay0 = y0 | 0;
+    const ay1 = (y0 + h) | 0;
+    for (let y = ay0; y <= ay1; y++) {
+      const yCap = (y === ay0 || y === ay1);
+      for (let dz = -ir; dz <= ir; dz++) {
+        for (let dx = -ir; dx <= ir; dx++) {
+          const d2 = dx * dx + dz * dz;
+          if (d2 <= r2 && (yCap || d2 >= innerR2)) {
+            this.setVoxel(cx + dx, y, cz + dz, baseCol + (Math.abs(dx + dz + y) % span));
+          }
+        }
+      }
+    }
+  }
+
+  fillEllipsoid(cx, cy, cz, rx, ry, rz, baseCol, span = 8) {
+    const irx = Math.ceil(rx), iry = Math.ceil(ry), irz = Math.ceil(rz);
+    for (let dy = -iry; dy <= iry; dy++) {
+      for (let dz = -irz; dz <= irz; dz++) {
+        for (let dx = -irx; dx <= irx; dx++) {
+          const d = (dx * dx) / (rx * rx) + (dy * dy) / (ry * ry) + (dz * dz) / (rz * rz);
+          if (d <= 1.0 && d >= 0.45) {
+            this.setVoxel(cx + dx, cy + dy, cz + dz, baseCol + (Math.abs(dx + dy + dz) % span));
+          }
+        }
+      }
+    }
+  }
+
+  drawTaperedLimb(x1, y1, z1, x2, y2, z2, r1, r2, colIdx) {
+    const dx = x2 - x1, dy = y2 - y1, dz = z2 - z1;
+    const steps = Math.max(1, Math.ceil(Math.sqrt(dx * dx + dy * dy + dz * dz) * 1.35));
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const r = r1 + (r2 - r1) * t;
+      const ir = Math.max(0, Math.ceil(r));
+      const cx = (x1 + dx * t) | 0;
+      const cy = (y1 + dy * t) | 0;
+      const cz = (z1 + dz * t) | 0;
+      for (let oy = -ir; oy <= ir; oy++) {
+        for (let oz = -ir; oz <= ir; oz++) {
+          for (let ox = -ir; ox <= ir; ox++) {
+            if (ox * ox + oy * oy + oz * oz <= r * r + 0.3) {
+              this.setVoxel(cx + ox, cy + oy, cz + oz, colIdx + (Math.abs(ox + oy + oz) % 6));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  drawCurvedBone(x0, y0, z0, x1, y1, z1, x2, y2, z2, rStart, rEnd, colIdx) {
+    const steps = 22;
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const inv = 1 - t;
+      const bx = inv * inv * x0 + 2 * inv * t * x1 + t * t * x2;
+      const by = inv * inv * y0 + 2 * inv * t * y1 + t * t * y2;
+      const bz = inv * inv * z0 + 2 * inv * t * z1 + t * t * z2;
+      const r = rStart + (rEnd - rStart) * t;
+      const ir = Math.max(0, Math.ceil(r));
+      for (let oy = -ir; oy <= ir; oy++) {
+        for (let oz = -ir; oz <= ir; oz++) {
+          for (let ox = -ir; ox <= ir; ox++) {
+            if (ox * ox + oy * oy + oz * oz <= r * r + 0.25) {
+              this.setVoxel(bx + ox, by + oy, bz + oz, colIdx + (Math.abs(ox + oy + oz) % 6));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Sculpt Cranial Cages, Pyramid Monolith Visors, Blind Seraph Masks, Split Mandibles & Sinew Braids */
+  sculptOccultHead(hx, hy, hz, s, helmType, beardStyle) {
+    const sc = (v) => Math.max(1, Math.round(v * s));
+
+    if (helmType === 'monolith_visor') {
+      // Towering Pyramid-Head angular executioner monolith helm jutting forward
+      const hTop = hy + sc(10);
+      for (let dy = -sc(2); dy <= sc(9); dy++) {
+        const prog = 1 - (dy + sc(2)) / sc(12);
+        const w = Math.max(1, Math.round(7.5 * s * prog));
+        const zFront = hz + Math.round(11 * s * prog);
+        const zBack = hz - Math.round(5 * s * prog);
+        this.fillShellBox(hx - w, hy + dy, zBack, hx + w, hy + dy + 1, zFront, 16, 10);
+      }
+      // Vertical iron seam ridge along the front prow
+      this.drawTaperedLimb(hx, hTop, hz, hx, hy - sc(2), hz + sc(11), 1.1 * s, 1.3 * s, 80);
+    } else if (helmType === 'iron_maiden_cage') {
+      // Inner pale ossified skull inside a tall barred wrought-iron head cage
+      this.fillEllipsoid(hx, hy + sc(3), hz, 3.4 * s, 4.2 * s, 3.6 * s, 32, 8);
+      const cageR = sc(5.2);
+      const cageH = sc(10);
+      // Bottom & top iron rings
+      this.fillShellCylinder(hx, hy - sc(1), hz, cageR, 1, 16, 8);
+      this.fillShellCylinder(hx, hy + sc(4), hz, cageR, 1, 16, 8);
+      this.fillShellCylinder(hx, hy + cageH, hz, cageR * 0.85, 1, 16, 8);
+      // 6 vertical iron cage bars
+      for (let a = 0; a < 6; a++) {
+        const rad = (a * Math.PI) / 3;
+        const bx = hx + Math.round(Math.cos(rad) * cageR);
+        const bz = hz + Math.round(Math.sin(rad) * cageR);
+        this.drawTaperedLimb(bx, hy - sc(1), bz, bx, hy + cageH, bz, 0.85 * s, 0.85 * s, 16);
+      }
+    } else {
+      // Base anatomical cranium / classical marble mask
+      const skullCol = (helmType === 'gilded_deathmask') ? 80 : 32;
+      this.fillEllipsoid(hx, hy + sc(3.5), hz, 4.2 * s, 4.8 * s, 4.4 * s, skullCol, 10);
+
+      // Deep eye sockets or weeping crimson streaks
+      this.fillEllipsoid(hx - sc(1.8), hy + sc(4), hz + sc(3.5), 1.0 * s, 1.0 * s, 1.0 * s, 16, 4);
+      this.fillEllipsoid(hx + sc(1.8), hy + sc(4), hz + sc(3.5), 1.0 * s, 1.0 * s, 1.0 * s, 16, 4);
+
+      if (helmType === 'blind_seraph_crown') {
+        // Weeping arterial streaks down cheeks + radiant golden/bone halo crown
+        this.drawTaperedLimb(hx - sc(1.8), hy + sc(3.5), hz + sc(4), hx - sc(1.8), hy, hz + sc(3.5), 0.7 * s, 0.5 * s, 48);
+        this.drawTaperedLimb(hx + sc(1.8), hy + sc(3.5), hz + sc(4), hx + sc(1.8), hy, hz + sc(3.5), 0.7 * s, 0.5 * s, 48);
+        for (let deg = 0; deg < 360; deg += 30) {
+          const r = (deg * Math.PI) / 180;
+          const sx = hx + Math.round(Math.cos(r) * 7.5 * s);
+          const sy = hy + sc(5) + Math.round(Math.sin(r) * 7.5 * s);
+          this.drawTaperedLimb(hx, hy + sc(5), hz - sc(2), sx, sy, hz - sc(2), 0.9 * s, 0.4 * s, 96);
+        }
+      } else if (helmType === 'split_mandible_skull') {
+        // Distorted split lower mandibles splayed left and right exposing glowing throat core
+        this.drawTaperedLimb(hx - sc(1), hy + sc(1), hz + sc(2), hx - sc(4.5), hy - sc(3), hz + sc(5), 1.3 * s, 0.5 * s, 32);
+        this.drawTaperedLimb(hx + sc(1), hy + sc(1), hz + sc(2), hx + sc(4.5), hy - sc(3), hz + sc(5), 1.3 * s, 0.5 * s, 32);
+        this.fillEllipsoid(hx, hy + sc(1), hz + sc(3), 1.5 * s, 1.5 * s, 1.5 * s, 96, 6);
+      } else if (helmType === 'horned_reliquary' || helmType === 'ossified_crown') {
+        // Sweeping ossified devil/archon horns
+        this.drawCurvedBone(hx - sc(3), hy + sc(6), hz, hx - sc(8), hy + sc(10), hz - sc(2), hx - sc(5), hy + sc(15), hz + sc(3), 1.8 * s, 0.5 * s, 32);
+        this.drawCurvedBone(hx + sc(3), hy + sc(6), hz, hx + sc(8), hy + sc(10), hz - sc(2), hx + sc(5), hy + sc(15), hz + sc(3), 1.8 * s, 0.5 * s, 32);
+      } else if (helmType === 'multi_eyed_mitre') {
+        // Tall gothic bishop mitre of bone with glowing ocular lenses
+        this.drawTaperedLimb(hx, hy + sc(6), hz, hx, hy + sc(15), hz - sc(1), 4.0 * s, 0.8 * s, 32);
+        this.fillEllipsoid(hx, hy + sc(9), hz + sc(2.5), 1.2 * s, 1.2 * s, 1.2 * s, 96, 6);
+        this.fillEllipsoid(hx, hy + sc(12), hz + sc(1.8), 1.0 * s, 1.0 * s, 1.0 * s, 96, 6);
+      } else if (helmType === 'spiked_halo_helm') {
+        // Cenobite radial iron pins & spikes projecting from cranium
+        for (let a = 0; a < 8; a++) {
+          const rad = (a * Math.PI) / 4;
+          this.drawTaperedLimb(
+            hx + Math.cos(rad) * 3 * s, hy + sc(4) + Math.sin(rad) * 3 * s, hz,
+            hx + Math.cos(rad) * 8 * s, hy + sc(4) + Math.sin(rad) * 8 * s, hz + sc(1),
+            0.8 * s, 0.3 * s, 16
+          );
+        }
+      } else if (helmType === 'censor_hood') {
+        this.fillEllipsoid(hx, hy + sc(4.5), hz - sc(0.5), 5.0 * s, 5.5 * s, 5.0 * s, 64, 10);
+      }
+    }
+
+    // 8 Cranial Tubing, Sinew Braids & Spine Locks
+    if (beardStyle !== 'clean_cranium') {
+      const braidCol = (beardStyle === 'arterial_hoses' || beardStyle === 'braided_sinew_locks') ? 48 :
+                       (beardStyle === 'weeping_chains' || beardStyle === 'cervical_cables') ? 16 : 32;
+      for (const side of [-1, 1]) {
+        this.drawCurvedBone(
+          hx + side * sc(3.5), hy + sc(2), hz,
+          hx + side * sc(6.5), hy - sc(3), hz + sc(2),
+          hx + side * sc(4.5), hy - sc(8), hz + sc(3),
+          1.1 * s, 0.55 * s, braidCol
+        );
+      }
+    }
+  }
+
+  /* Sculpt Occult Weapons & Multi-Limb Grafts */
+  sculptOccultWeapon(hx, hy, hz, side, s, weapType) {
+    const sc = (v) => Math.max(1, Math.round(v * s));
+
+    if (weapType === 'great_cleaver_blade') {
+      // Colossal rusted Pyramid-Head style executioner great-cleaver
+      this.drawTaperedLimb(hx, hy - sc(4), hz, hx, hy + sc(18), hz + sc(8), 1.2 * s, 1.5 * s, 16);
+      for (let i = 0; i <= 14; i++) {
+        const t = i / 14;
+        const bx = hx;
+        const by = hy + sc(2) + Math.round(t * sc(16));
+        const bz = hz + Math.round(t * sc(8));
+        this.drawTaperedLimb(bx, by, bz, bx, by - sc(4), bz + sc(6 * (1 - t * 0.4)), 1.2 * s, 0.5 * s, (i % 3 === 0) ? 48 : 16);
+      }
+    } else if (weapType === 'quad_bone_scythes' || weapType === 'rib_spreader_halberd') {
+      // Long spinal shaft + sweeping curved ossified bone scythe blade
+      this.drawTaperedLimb(hx, hy - sc(8), hz - sc(2), hx, hy + sc(14), hz + sc(3), 1.0 * s, 1.1 * s, 32);
+      this.drawCurvedBone(
+        hx, hy + sc(13), hz + sc(3),
+        hx + side * sc(4), hy + sc(17), hz + sc(9),
+        hx + side * sc(2), hy + sc(9), hz + sc(14),
+        1.6 * s, 0.4 * s, 32
+      );
+    } else if (weapType === 'pillar_of_guilt' || weapType === 'chained_guillotine') {
+      // Heavy chained marble obelisk / guillotine block
+      this.fillShellBox(hx - sc(3), hy - sc(6), hz - sc(2), hx + sc(3), hy + sc(10), hz + sc(4), 32, 10);
+      this.drawTaperedLimb(hx - sc(3.5), hy, hz + sc(1), hx + sc(3.5), hy, hz + sc(1), 1.1 * s, 1.1 * s, 16);
+    } else if (weapType === 'serrated_censer_flail') {
+      // Handle + chain + glowing swinging brass censer sphere
+      this.drawTaperedLimb(hx, hy - sc(3), hz, hx, hy + sc(6), hz + sc(2), 1.0 * s, 1.0 * s, 80);
+      this.drawTaperedLimb(hx, hy + sc(6), hz + sc(2), hx + side * sc(3), hy - sc(3), hz + sc(7), 0.7 * s, 0.7 * s, 16);
+      this.fillEllipsoid(hx + side * sc(3), hy - sc(5), hz + sc(7), 3.2 * s, 3.8 * s, 3.2 * s, 80, 8);
+      this.fillEllipsoid(hx + side * sc(3), hy - sc(5), hz + sc(7), 1.8 * s, 1.8 * s, 1.8 * s, 96, 6);
+    } else if (weapType === 'twin_flensing_hooks' || weapType === 'six_armed_claws') {
+      // Elongated surgical hooks / scythe-talons extending from hand
+      this.drawCurvedBone(hx, hy, hz, hx + side * sc(3), hy + sc(4), hz + sc(6), hx, hy - sc(2), hz + sc(10), 1.2 * s, 0.4 * s, 16);
+      this.drawCurvedBone(hx, hy + sc(2), hz, hx + side * sc(2), hy + sc(6), hz + sc(5), hx, hy + sc(1), hz + sc(9), 1.0 * s, 0.4 * s, 32);
+    } else {
+      // obsidian_monolith_sword / biomech_lance / necro_crucible_staff
+      const col = (weapType === 'necro_crucible_staff') ? 96 : 16;
+      this.drawTaperedLimb(hx, hy - sc(4), hz, hx, hy + sc(18), hz + sc(5), 1.4 * s, 0.5 * s, col);
+      this.drawTaperedLimb(hx - sc(3), hy + sc(2), hz + sc(1), hx + sc(3), hy + sc(2), hz + sc(1), 1.1 * s, 1.1 * s, 80);
+    }
+  }
+
+  /* Sculpt a Single Biomechanical Construct Entity (used for 1-Entity, 3-Entity Triad, and 5-Entity Choir) */
+  sculptConstructModule(cfg) {
+    const {
+      ox = 64, oy = 14, oz = 64, s = 1.0,
+      poseType = 'multi_arm_invocation',
+      armorType = 'flayed_biomech',
+      helmType = 'iron_maiden_cage',
+      weapType = 'quad_bone_scythes',
+      backType = 'skeletal_seraph_wings',
+      beardStyle = 'braided_sinew_locks'
+    } = cfg;
+    const sc = (v) => Math.max(1, Math.round(v * s));
+
+    // 1. Determine Elevation & Posture Offsets
+    const isFloating = (poseType === 'crucified_ascension' || poseType === 'floating_reliquary');
+    const liftY = isFloating ? sc(8) : 0;
+    const pelvisY = oy + sc(18) + liftY;
+    const chestY  = oy + sc(30) + liftY;
+    const headY   = oy + sc(38) + liftY;
+    const leanZ   = (poseType === 'predator_stalk' || poseType === 'abyssal_lunge') ? sc(4) : 0;
+
+    // If floating, sculpt trailing spinal umbilicals & chains anchoring to plinth
+    if (isFloating) {
+      this.drawCurvedBone(ox, oy, oz, ox - sc(3), oy + sc(8), oz - sc(2), ox, pelvisY, oz, 1.5 * s, 1.1 * s, 16);
+      this.drawCurvedBone(ox - sc(6), oy, oz + sc(2), ox - sc(4), oy + sc(9), oz, ox - sc(2), pelvisY, oz, 0.9 * s, 0.8 * s, 48);
+      this.drawCurvedBone(ox + sc(6), oy, oz + sc(2), ox + sc(4), oy + sc(9), oz, ox + sc(2), pelvisY, oz, 0.9 * s, 0.8 * s, 48);
+    }
+
+    // 2. Sculpt Hind Legs, Biomech Pistons, Hooves/Greaves & Tattered Cloak Hem
+    for (const side of [-1, 1]) {
+      const hipX = ox + side * sc(4.5);
+      const kneeX = ox + side * sc(5.5);
+      const kneeY = oy + sc(9) + Math.round(liftY * 0.5);
+      const kneeZ = oz + sc(2);
+      const footX = ox + side * sc(5.5);
+      const footY = oy + (isFloating ? sc(3) : 0);
+      const footZ = oz + (side < 0 ? sc(2) : -sc(1));
+
+      // Flayed sinew thigh + external bone/iron strut
+      this.drawTaperedLimb(hipX, pelvisY, oz, kneeX, kneeY, kneeZ, 2.5 * s, 1.9 * s, 48);
+      this.drawTaperedLimb(kneeX, kneeY, kneeZ, footX, footY, footZ, 2.0 * s, 1.4 * s, 32);
+      // Knee ossified spike
+      this.drawTaperedLimb(kneeX, kneeY, kneeZ, kneeX, kneeY + sc(3), kneeZ + sc(2.5), 1.2 * s, 0.4 * s, 32);
+    }
+
+    // Tattered crimson loin-cloth / chain apron hanging from pelvis
+    this.fillShellBox(ox - sc(5), pelvisY - sc(9), oz - sc(3), ox + sc(5), pelvisY, oz + sc(3), 64, 10);
+
+    // 3. Sculpt Biomechanical Spine, Exposed Ribcage, Marble Ossuary or Furnace Core
+    this.fillEllipsoid(ox, pelvisY, oz, 5.2 * s, 3.2 * s, 3.8 * s, 32, 8);
+    // Exposed dorsal vertebral column
+    this.drawTaperedLimb(ox, pelvisY, oz - sc(2), ox, chestY + sc(4), oz + leanZ - sc(2), 2.2 * s, 2.4 * s, 32);
+
+    if (armorType === 'marble_ossuary') {
+      // Cracked classical marble torso with hollow reliquary chest cavity & glowing skull inside
+      this.fillEllipsoid(ox, chestY, oz + leanZ, 7.2 * s, 7.5 * s, 4.8 * s, 32, 10);
+      this.fillEllipsoid(ox, chestY, oz + leanZ + sc(2), 3.2 * s, 3.8 * s, 2.2 * s, 96, 6);
+    } else if (armorType === 'ribcage_furnace') {
+      // Blazing necro-furnace core enclosed by curved bone ribs
+      this.fillEllipsoid(ox, chestY - sc(1), oz + leanZ, 4.2 * s, 5.2 * s, 3.5 * s, 96, 8);
+    } else {
+      // Flayed musculature core
+      this.fillEllipsoid(ox, chestY - sc(1), oz + leanZ, 5.6 * s, 6.4 * s, 3.8 * s, 48, 10);
+    }
+
+    // Sculpt 4 pairs of arched external anatomical ribs wrapping the torso
+    for (let r = 0; r < 4; r++) {
+      const ry = pelvisY + sc(4) + r * sc(3);
+      const rz = oz + Math.round((r / 4) * leanZ);
+      for (const side of [-1, 1]) {
+        this.drawCurvedBone(
+          ox, ry, rz - sc(3),
+          ox + side * sc(7.5), ry, rz + sc(1),
+          ox + side * sc(2.2), ry - sc(1), rz + sc(4.5),
+          1.15 * s, 0.75 * s, 32
+        );
+      }
+    }
+
+    // 4. Sculpt Multi-Armed Spliced Grafts (Primary Upper Arms + Secondary Spliced Lower Arms!)
+    const hasExtraArms = (
+      armorType === 'seraphic_graft' ||
+      poseType === 'multi_arm_invocation' ||
+      weapType === 'quad_bone_scythes' ||
+      weapType === 'six_armed_claws'
+    );
+
+    for (const side of [-1, 1]) {
+      const shldX = ox + side * sc(7);
+      const shldY = chestY + sc(3);
+      const shldZ = oz + leanZ;
+
+      // Pauldron bone/iron graft
+      this.fillEllipsoid(shldX, shldY, shldZ, 3.0 * s, 2.6 * s, 2.8 * s, 32, 8);
+
+      let elbX = ox + side * sc(12);
+      let elbY = chestY + (poseType === 'crucified_ascension' || poseType === 'multi_arm_invocation' ? sc(4) : -sc(2));
+      let elbZ = shldZ + sc(2);
+
+      let handX = ox + side * sc(16);
+      let handY = elbY + (poseType === 'multi_arm_invocation' ? sc(6) : -sc(4));
+      let handZ = elbZ + sc(5);
+
+      this.drawTaperedLimb(shldX, shldY, shldZ, elbX, elbY, elbZ, 2.1 * s, 1.6 * s, 48);
+      this.drawTaperedLimb(elbX, elbY, elbZ, handX, handY, handZ, 1.6 * s, 1.3 * s, 32);
+
+      // Primary Weapon in Right Hand (or both hands for symmetric weapons)
+      if (side === 1 || weapType === 'quad_bone_scythes' || weapType === 'twin_flensing_hooks' || weapType === 'six_armed_claws') {
+        this.sculptOccultWeapon(handX, handY, handZ, side, s, weapType);
+      }
+
+      // Secondary Grafted Lower Arms emerging from mid-ribcage!
+      if (hasExtraArms) {
+        const lowShldX = ox + side * sc(5.5);
+        const lowShldY = chestY - sc(3);
+        const lowElbX  = ox + side * sc(11);
+        const lowElbY  = chestY - sc(6);
+        const lowHandX = ox + side * sc(15);
+        const lowHandY = chestY - sc(3);
+        const lowHandZ = shldZ + sc(8);
+
+        this.drawTaperedLimb(lowShldX, lowShldY, shldZ, lowElbX, lowElbY, shldZ + sc(3), 1.8 * s, 1.4 * s, 48);
+        this.drawTaperedLimb(lowElbX, lowElbY, shldZ + sc(3), lowHandX, lowHandY, lowHandZ, 1.4 * s, 1.1 * s, 32);
+
+        if (weapType === 'quad_bone_scythes' || weapType === 'six_armed_claws') {
+          this.drawCurvedBone(
+            lowHandX, lowHandY, lowHandZ,
+            lowHandX + side * sc(4), lowHandY + sc(4), lowHandZ + sc(6),
+            lowHandX, lowHandY - sc(4), lowHandZ + sc(10),
+            1.2 * s, 0.35 * s, 32
+          );
+        }
+      }
+    }
+
+    // 5. Sculpt Dorsal Rigging & Appendages (Seraph Bone Wings, Organ Pipes, Breaking-Wheel Halo, Arachnid Limbs)
+    const backZ = oz + leanZ - sc(3);
+    if (backType === 'skeletal_seraph_wings') {
+      for (const side of [-1, 1]) {
+        // Sweeping upper wing bone arch
+        const tipX = ox + side * sc(22);
+        const tipY = chestY + sc(16);
+        this.drawCurvedBone(
+          ox + side * sc(3), chestY + sc(2), backZ,
+          ox + side * sc(13), chestY + sc(14), backZ - sc(3),
+          tipX, tipY, backZ - sc(1),
+          2.0 * s, 0.8 * s, 32
+        );
+        // 4 Pinion bone feathers + tattered crimson membrane ribs
+        for (let f = 1; f <= 4; f++) {
+          const fx = ox + side * Math.round((f / 4) * sc(20));
+          const fy = chestY + sc(10) + Math.round((1 - f / 4) * sc(4));
+          this.drawTaperedLimb(fx, fy, backZ - sc(2), fx - side * sc(2), fy - sc(13), backZ - sc(3), 1.1 * s, 0.4 * s, (f & 1) ? 32 : 64);
+        }
+      }
+    } else if (backType === 'cathedral_organ_pipes') {
+      // Vertical gothic organ exhaust pipes rising behind shoulders
+      for (const dx of [-7, -4, 4, 7]) {
+        const pipeH = (Math.abs(dx) === 4) ? sc(18) : sc(14);
+        this.drawTaperedLimb(ox + sc(dx), chestY, backZ, ox + sc(dx), chestY + pipeH, backZ - sc(2), 1.6 * s, 1.8 * s, 80);
+      }
+    } else if (backType === 'torture_wheel_halo') {
+      // Spiked iron breaking-wheel suspended behind torso/head
+      const wheelY = chestY + sc(6);
+      const wheelR = 13 * s;
+      for (let deg = 0; deg < 360; deg += 12) {
+        const r = (deg * Math.PI) / 180;
+        const wx = ox + Math.cos(r) * wheelR;
+        const wy = wheelY + Math.sin(r) * wheelR;
+        this.fillEllipsoid(wx, wy, backZ - sc(2), 1.4 * s, 1.4 * s, 1.4 * s, (deg % 48 === 0) ? 96 : 16, 6);
+        if (deg % 45 === 0) {
+          this.drawTaperedLimb(ox, wheelY, backZ - sc(2), wx, wy, backZ - sc(2), 1.0 * s, 0.8 * s, 16);
+        }
+      }
+    } else if (backType === 'mecha_arachnid_limbs') {
+      // 4 articulated surgical spider-legs emerging from scapulae
+      for (const side of [-1, 1]) {
+        for (const vOff of [0, 5]) {
+          const jointX = ox + side * sc(16);
+          const jointY = chestY + sc(8 + vOff);
+          const tipX   = ox + side * sc(21);
+          const tipY   = chestY - sc(5 + vOff);
+          this.drawTaperedLimb(ox + side * sc(3), chestY + sc(2), backZ, jointX, jointY, backZ - sc(2), 1.4 * s, 1.1 * s, 16);
+          this.drawTaperedLimb(jointX, jointY, backZ - sc(2), tipX, tipY, backZ + sc(4), 1.1 * s, 0.4 * s, 32);
+        }
+      }
+    } else if (backType === 'hanging_iron_cages') {
+      // Twin gantry bars suspending iron cages on chains
+      for (const side of [-1, 1]) {
+        const cx = ox + side * sc(13);
+        this.drawTaperedLimb(ox + side * sc(4), chestY + sc(4), backZ, cx, chestY + sc(10), backZ, 1.2 * s, 1.0 * s, 16);
+        this.drawTaperedLimb(cx, chestY + sc(10), backZ, cx, chestY - sc(2), backZ, 0.7 * s, 0.7 * s, 16);
+        this.fillShellBox(cx - sc(2.5), chestY - sc(7), backZ - sc(2.5), cx + sc(2.5), chestY - sc(2), backZ + sc(2.5), 16, 8);
+      }
+    } else {
+      // flesh_draped_mantle: sweeping Spawn-style tattered crimson cloak & chains
+      this.fillShellBox(ox - sc(9), oy + sc(4), backZ - sc(3), ox + sc(9), chestY + sc(4), backZ, 64, 12);
+    }
+
+    // 6. Sculpt Cranial Cage / Visage & Sinew Braids
+    this.sculptOccultHead(ox, headY, oz + leanZ, s, helmType, beardStyle);
+  }
+
+  buildUnitModel(unit) {
+    this.clearGrid();
+    this.setupPalette(unit);
+
+    const arch = ARCHETYPES[unit.division || 0] || ARCHETYPES[0];
+    const parts = unit.customParts || {};
+    const poseType   = parts.pose   || arch.pose   || 'multi_arm_invocation';
+    const armorType  = parts.armor  || arch.armor  || 'flayed_biomech';
+    const helmType   = parts.helm   || arch.helm   || 'iron_maiden_cage';
+    const weapType   = parts.weapon || arch.weapon || 'quad_bone_scythes';
+    const backType   = parts.back   || arch.back   || 'skeletal_seraph_wings';
+    const plinthType = parts.plinth || arch.plinth || 'ossuary_skull_mound';
+    const beardStyle = unit.beard   || parts.beard || 'braided_sinew_locks';
+    const squadSize  = Number(unit.squadSize || parts.squadSize || 1);
+
+    // 1. Sculpt Scenic Sacrificial Plinth Base
+    const baseR = squadSize === 5 ? 52 : (squadSize === 3 ? 46 : 36);
+    if (plinthType === 'marble_sacrificial_altar' || plinthType === 'broken_cathedral_ruins') {
+      this.fillShellBox(64 - baseR, 4, 64 - baseR + 4, 64 + baseR, 8, 64 + baseR - 4, 1, 10);
+      this.fillShellBox(64 - baseR + 3, 8, 64 - baseR + 7, 64 + baseR - 3, 14, 64 + baseR - 7, 32, 12);
+      // Altar blood channels & Synod seal plate
+      this.fillShellBox(50, 5, 64 + baseR - 4, 78, 9, 64 + baseR - 2, 128, 8);
+    } else if (plinthType === 'boiling_ichor_basin') {
+      this.fillShellCylinder(64, 4, 64, baseR, 5, 1, 10);
+      this.fillShellCylinder(64, 9, 64, baseR - 3, 5, 96, 12);
+    } else if (plinthType === 'rusted_chain_abyss') {
+      this.fillShellCylinder(64, 4, 64, baseR, 5, 1, 10);
+      this.fillShellCylinder(64, 9, 64, baseR - 2, 5, 16, 12);
+    } else {
+      // ossuary_skull_mound or biomech_spine_pillar
+      this.fillShellCylinder(64, 4, 64, baseR, 5, 1, 10);
+      this.fillShellCylinder(64, 9, 64, baseR - 3, 5, 112, 12);
+      // Sculpt ossuary skulls around the mound rim
+      for (let deg = 0; deg < 360; deg += 45) {
+        const r = (deg * Math.PI) / 180;
+        const sx = 64 + Math.round(Math.cos(r) * (baseR - 10));
+        const sz = 64 + Math.round(Math.sin(r) * (baseR - 10));
+        this.fillEllipsoid(sx, 14, sz, 3.2, 3.2, 3.2, 32, 8);
+      }
+    }
+
+    // 2. Sculpt 1-Entity Solo Monolith, 3-Entity Bone Triad, or 5-Entity Occult Choir Rank
+    if (squadSize === 1) {
+      this.sculptConstructModule({
+        ox: 64, oy: 14, oz: 64, s: 1.0,
+        poseType, armorType, helmType, weapType, backType, beardStyle
+      });
+    } else if (squadSize === 3) {
+      // 3-Entity Bone Triad: Central Archon Construct + Left & Right Flanking Constructs
+      this.sculptConstructModule({
+        ox: 64, oy: 14, oz: 62, s: 0.84,
+        poseType, armorType, helmType, weapType, backType, beardStyle
+      });
+      this.sculptConstructModule({
+        ox: 31, oy: 14, oz: 68, s: 0.66,
+        poseType: 'abyssal_lunge', armorType, helmType: 'monolith_visor', weapType: 'great_cleaver_blade', backType, beardStyle
+      });
+      this.sculptConstructModule({
+        ox: 97, oy: 14, oz: 68, s: 0.66,
+        poseType: 'crucified_ascension', armorType, helmType: 'iron_maiden_cage', weapType: 'twin_flensing_hooks', backType, beardStyle
+      });
+    } else {
+      // 5-Entity Occult Choir Rank: 2 Rear Seraph/Organ Constructs + Central Demiurge + 2 Vanguard Executioners
+      this.sculptConstructModule({
+        ox: 38, oy: 14, oz: 44, s: 0.68,
+        poseType: 'crucified_ascension', armorType: 'seraphic_graft', helmType: 'blind_seraph_crown', weapType: 'quad_bone_scythes', backType: 'skeletal_seraph_wings', beardStyle
+      });
+      this.sculptConstructModule({
+        ox: 90, oy: 14, oz: 44, s: 0.68,
+        poseType: 'spire_perch', armorType: 'chitin_cathedral', helmType: 'multi_eyed_mitre', weapType: 'serrated_censer_flail', backType: 'cathedral_organ_pipes', beardStyle
+      });
+      this.sculptConstructModule({
+        ox: 64, oy: 14, oz: 64, s: 0.80,
+        poseType, armorType, helmType, weapType, backType, beardStyle
+      });
+      this.sculptConstructModule({
+        ox: 30, oy: 14, oz: 82, s: 0.56,
+        poseType: 'abyssal_lunge', armorType, helmType: 'monolith_visor', weapType: 'great_cleaver_blade', backType: 'flesh_draped_mantle', beardStyle
+      });
+      this.sculptConstructModule({
+        ox: 98, oy: 14, oz: 82, s: 0.56,
+        poseType: 'predator_stalk', armorType, helmType: 'split_mandible_skull', weapType: 'six_armed_claws', backType: 'mecha_arachnid_limbs', beardStyle
+      });
+    }
+
+    this.extractSurfaceVoxels();
+  }
+
+  extractSurfaceVoxels() {
+    this.surfCount = 0;
+    const count = this.occupiedCount;
+    const stamp = this.currentStamp;
+    const sGrid = this.stampGrid;
+    const vGrid = this.grid;
+
+    for (let i = 0; i < count; i++) {
+      const idx = this.occupiedList[i];
+      if (sGrid[idx] !== stamp) continue;
+      const colIdx = vGrid[idx];
+      if (colIdx === 0) continue;
+
+      const x = idx & 127;
+      const z = (idx >> 7) & 127;
+      const y = (idx >> 14) & 127;
+
+      const nxp = (x < 127 && sGrid[idx + 1] === stamp) ? vGrid[idx + 1] : 0;
+      const nxm = (x > 0   && sGrid[idx - 1] === stamp) ? vGrid[idx - 1] : 0;
+      const nzp = (z < 127 && sGrid[idx + 128] === stamp) ? vGrid[idx + 128] : 0;
+      const nzm = (z > 0   && sGrid[idx - 128] === stamp) ? vGrid[idx - 128] : 0;
+      const nyp = (y < 127 && sGrid[idx + 16384] === stamp) ? vGrid[idx + 16384] : 0;
+      const nym = (y > 0   && sGrid[idx - 16384] === stamp) ? vGrid[idx - 16384] : 0;
+
+      if (nxp && nxm && nzp && nzm && nyp && nym) continue;
+
+      const basePacked = this.paletteRGB[colIdx];
+      const r = basePacked & 255;
+      const g = (basePacked >> 8) & 255;
+      const b = (basePacked >> 16) & 255;
+
+      let ao = 1.0;
+      if (!this.isEmissive[colIdx]) {
+        if (nyp) ao -= 0.11;
+        if (nxp) ao -= 0.05;
+        if (nxm) ao -= 0.05;
+      }
+
+      const si = this.surfCount++;
+      this.surfX[si] = x;
+      this.surfY[si] = y;
+      this.surfZ[si] = z;
+      this.surfColTop[si]   = this.packRGB(r * 1.18 * ao, g * 1.18 * ao, b * 1.18 * ao);
+      this.surfColLeft[si]  = this.packRGB(r * 0.90 * ao, g * 0.88 * ao, b * 0.92 * ao);
+      this.surfColRight[si] = this.packRGB(r * 0.72 * ao, g * 0.65 * ao, b * 0.70 * ao);
+
+      if (this.surfCount >= 109990) break;
+    }
+  }
+
+  createSnapshot() {
+    const n = this.surfCount;
+    let minX = 128, maxX = 0, minY = 128, maxY = 0, minZ = 128, maxZ = 0;
+    for (let i = 0; i < n; i++) {
+      const x = this.surfX[i], y = this.surfY[i], z = this.surfZ[i];
+      if (x < minX) minX = x; if (x > maxX) maxX = x;
+      if (y < minY) minY = y; if (y > maxY) maxY = y;
+      if (z < minZ) minZ = z; if (z > maxZ) maxZ = z;
+    }
+    const cx = (minX + maxX) * 0.5 || 64;
+    const cy = (minY + maxY) * 0.5 || 38;
+    const cz = (minZ + maxZ) * 0.5 || 64;
+    const span = Math.max(26, maxX - minX, maxY - minY, maxZ - minZ);
+
+    return {
+      count: n,
+      cx, cy, cz, span,
+      x: this.surfX.slice(0, n),
+      y: this.surfY.slice(0, n),
+      z: this.surfZ.slice(0, n),
+      colTop: this.surfColTop.slice(0, n),
+      colLeft: this.surfColLeft.slice(0, n),
+      colRight: this.surfColRight.slice(0, n)
+    };
+  }
+
+  /* Auto-Bounding-Box Camera Projection: Centers 1-Entity, 3-Entity, and 5-Entity Formations */
+  renderSnapshotToCanvas(snapshot, yaw = 0.62, pitch = 0.26, zoomMult = 1.0, targetCanvas = null, wire = false) {
+    if (!snapshot || snapshot.count === 0) return;
+    const W = 260, H = 260;
+    this.zBuf.fill(-999999);
+    this.pixels.fill(0);
+
+    const cosY = Math.cos(yaw), sinY = Math.sin(yaw);
+    const cosP = Math.cos(pitch), sinP = Math.sin(pitch);
+
+    const autoScale = ((W * 0.80) / snapshot.span) * zoomMult;
+    const splat = wire ? 0 : Math.max(1, Math.ceil(autoScale * 0.65));
+
+    const count = snapshot.count;
+    const cx = snapshot.cx, cy = snapshot.cy, cz = snapshot.cz;
+    const sxArr = snapshot.x, syArr = snapshot.y, szArr = snapshot.z;
+    const cTopArr = snapshot.colTop, cLeftArr = snapshot.colLeft, cRightArr = snapshot.colRight;
+    const zBuf = this.zBuf, pix = this.pixels;
+
+    for (let i = 0; i < count; i++) {
+      const vx = sxArr[i] - cx;
+      const vy = syArr[i] - cy;
+      const vz = szArr[i] - cz;
+
+      const rx = vx * cosY + vz * sinY;
+      const rz = -vx * sinY + vz * cosY;
+      const ry = vy * cosP - rz * sinP;
+      const depth = vy * sinP + rz * cosP;
+
+      const px = (130 + rx * autoScale) | 0;
+      const py = (134 - ry * autoScale) | 0;
+
+      if (px < 4 || px >= W - 4 || py < 4 || py >= H - 4) continue;
+
+      const cTop = cTopArr[i], cLeft = cLeftArr[i], cRight = cRightArr[i];
+      for (let dy = -splat; dy <= splat; dy++) {
+        const sy = py + dy;
+        const rowOff = sy * W;
+        const isTop = dy < 0;
+        for (let dx = -splat; dx <= splat; dx++) {
+          const idx = rowOff + px + dx;
+          if (depth > zBuf[idx]) {
+            zBuf[idx] = depth;
+            pix[idx] = isTop ? cTop : (dx < 0 ? cLeft : cRight);
+          }
+        }
+      }
+    }
+
+    this.workCtx.putImageData(this.imgData, 0, 0);
+    if (targetCanvas) {
+      const ctx = targetCanvas.getContext('2d');
+      ctx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+      ctx.drawImage(this.workCanvas, 0, 0, targetCanvas.width, targetCanvas.height);
+    }
+  }
+
+  bakeThumbnailDataURL(unit) {
+    this.buildUnitModel(unit);
+    const snap = this.createSnapshot();
+    this.renderSnapshotToCanvas(snap, 0.62, 0.26, 1.0, this.thumbCanvas, false);
+    return this.thumbCanvas.toDataURL('image/png');
+  }
+}
+
+const VoxelEngine = new VoxelOccultEngine();
+const ThumbCache = new Map();
+const ThumbQueue = [];
+let thumbQueueRunning = false;
+
+function getUnitVisualKey(unit) {
+  const p = unit.customParts || {};
+  const hexKey = unit.customHexColors ? unit.customHexColors.join('') : 'STD';
+  return `${unit.tier}_${unit.faction}_${unit.division}_${unit.squadSize || 1}_${unit.beard || 'braided_sinew_locks'}_${p.pose || ''}_${p.helm || ''}_${p.weapon || ''}_${p.plinth || ''}_${hexKey}`;
+}
+
+function makePlaceholderSVG(unit) {
+  const tData = TIERS[unit.tier] || TIERS[0];
+  const sq = SQUAD_CFG[unit.squadSize || 1] || SQUAD_CFG[1];
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+    <rect width="120" height="120" fill="#09070b"/>
+    <circle cx="60" cy="54" r="30" fill="none" stroke="${tData.color}" stroke-width="2"/>
+    <polygon points="60,24 78,76 32,44 88,44 42,76" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="60" y="108" fill="#ffffff" font-family="monospace" font-weight="bold" font-size="10" text-anchor="middle">${tData.code} ${sq.badge}</text>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+function getOrQueueThumb(unit) {
+  const vkey = getUnitVisualKey(unit);
+  if (ThumbCache.has(vkey)) return ThumbCache.get(vkey);
+  if (!ThumbQueue.some(item => item.vkey === vkey)) {
+    ThumbQueue.push({ vkey, unit });
+  }
+  startThumbQueue();
+  return makePlaceholderSVG(unit);
+}
+
+function startThumbQueue() {
+  if (thumbQueueRunning) return;
+  thumbQueueRunning = true;
+  requestAnimationFrame(processThumbQueue);
+}
+
+function processThumbQueue() {
+  let bakedThisFrame = 0;
+  while (ThumbQueue.length > 0 && bakedThisFrame < 2) {
+    const item = ThumbQueue.shift();
+    if (!ThumbCache.has(item.vkey)) {
+      const url = VoxelEngine.bakeThumbnailDataURL(item.unit);
+      if (ThumbCache.size > 500) {
+        const oldest = ThumbCache.keys().next().value;
+        ThumbCache.delete(oldest);
+      }
+      ThumbCache.set(item.vkey, url);
+      const imgs = document.querySelectorAll(`img[data-vkey="${item.vkey}"]`);
+      for (let i = 0; i < imgs.length; i++) {
+        imgs[i].src = url;
+      }
+      bakedThisFrame++;
+    }
+  }
+  if (ThumbQueue.length > 0) {
+    requestAnimationFrame(processThumbQueue);
+  } else {
+    thumbQueueRunning = false;
+  }
+}
+
+/* ============================================================================
+   3. GAME STATE, CONSTRUCT FACTORY, SOUL SPLICER, AUCTIONS, ARENA & SYNOD
+   ============================================================================ */
+const State = {
+  funds: 500,
+  fuel: 1000,
+  godMode: false,
+  units: [],
+  pilots: [],
+  codex: {},
+  tech: { yield: 0, fuel: 0, atk: 0, net: 0 },
+  auto: { autoMarch: false, autoRepair: false, autoSupply: false },
+  stats: {
+    unboxed: 0, forged: 0, masterworks: 0,
+    arenasWon: 0, unitsCaptured: 0, patrolsDone: 0,
+    auctionsWon: 0, auctionsSold: 0, commissionsDone: 0,
+    salvaged: 0, totalEarned: 500
+  },
+  claimedMilestones: {},
+  buyerAuction: null,
+  sellerAuctions: [null, null, null, null, null],
+  commissions: [],
+  patrolTimers: [0, 0, 0, 0, 0, 0]
+};
+
+let NEXT_ID = 100;
+
+function createCollectorUnit(tier, faction, division, opts = null) {
+  const t = Math.max(0, Math.min(14, tier | 0));
+  const f = Math.max(0, Math.min(9, faction | 0));
+  const d = Math.max(0, Math.min(9, division | 0));
+  const tData = TIERS[t];
+  const fData = FACTIONS[f];
+  const aData = ARCHETYPES[d];
+
+  let squadSize = 1;
+  if (opts && opts.squadSize) {
+    squadSize = Number(opts.squadSize);
+  } else {
+    const r = Math.random();
+    if (r < 0.18) squadSize = 5;
+    else if (r < 0.45) squadSize = 3;
+  }
+  const sqCfg = SQUAD_CFG[squadSize] || SQUAD_CFG[1];
+  const beard = (opts && opts.beard) ? opts.beard : TRACE_STYLES[(t + f + d + Math.floor(Math.random() * 8)) % TRACE_STYLES.length];
+  const dexNum = calcCodexNum(t, f, d, squadSize);
+  const mult = (opts && opts.mult) ? opts.mult : 1.0;
+
+  const val = Math.max(15, Math.round(tData.val * sqCfg.mult * mult));
+  const maxHp = Math.round(tData.hp * sqCfg.mult * (1 + (mult - 1) * 0.35));
+  const atk = Math.round(tData.atk * sqCfg.mult * (1 + (mult - 1) * 0.35));
+
+  return {
+    id: 'U' + (NEXT_ID++),
+    dexNum,
+    tier: t,
+    faction: f,
+    division: d,
+    squadSize,
+    beard,
+    name: (opts && opts.name) ? opts.name : `${fData.name.split(' ')[0]} ${aData.name}${squadSize > 1 ? ` (${squadSize}x)` : ''}`,
+    finish: (opts && opts.finish) ? opts.finish : tData.finish,
+    val,
+    hp: maxHp,
+    maxHp,
+    atk,
+    group: aData.group,
+    vaulted: false,
+    sectorId: null,
+    pilotId: null,
+    isListing: false,
+    customParts: (opts && opts.customParts) ? { ...opts.customParts } : null,
+    customHexColors: (opts && opts.customHexColors) ? [...opts.customHexColors] : null,
+    artisanGrade: (opts && opts.artisanGrade) || null
+  };
+}
+
+function createCommander(tierBonus = 0) {
+  const names = [
+    'Archon Seth Siro', 'Hierophant Pinhead', 'Grand Splicer Malbolgia',
+    'Sister Alessa of the Cage', 'Inquisitor Valtiel', 'Mother of the Blind Seraph',
+    'Lord of the Rusted Pyramid', 'Arch-Surgeon Leviathan', 'Apostle of Cracked Marble', 'Deacon of Weeping Chains'
+  ];
+  const pwr = Math.min(14, Math.max(0, tierBonus + Math.floor(Math.random() * 3)));
+  return {
+    id: 'P' + (NEXT_ID++),
+    name: names[Math.floor(Math.random() * names.length)],
+    rank: pwr + 1,
+    yieldBuff: 10 + pwr * 5,
+    atkBuff: 6 + pwr * 4,
+    unitId: null
+  };
+}
+
+function getUnitTradeCode(unit) {
+  if (unit.customHexColors && unit.customHexColors.length === 5) {
+    const t36 = (unit.tier || 0).toString(36).toUpperCase();
+    const d36 = (unit.division || 0).toString(36).toUpperCase();
+    const s36 = (unit.squadSize || 1).toString(36).toUpperCase();
+    const bIdx = Math.max(0, TRACE_STYLES.indexOf(unit.beard));
+    const hStr = unit.customHexColors.map(h => h.replace('#', '')).join('-');
+    return `OMC-${t36}${d36}${s36}${bIdx}-${hStr}`;
+  }
+  return `OM-${(unit.dexNum || 1).toString(36).toUpperCase().padStart(3, '0')}`;
+}
+
+/* ============================================================================
+   4. TAB 2: SOUL SPLICER (CUSTOM FORGE & 5-ZONE #RRGGBB HEX PAINT STUDIO)
+   ============================================================================ */
+const CustomForge = {
+  yaw: 0.62,
+  pitch: 0.26,
+  zoomLevel: 1.0,
+  spinning: true,
+  wireframe: false,
+  dragging: false,
+  lastX: 0,
+  lastY: 0,
+  snapshot: null,
+  hexColors: ['#942A30', '#EDE8DF', '#3A3E46', '#76121A', '#F5B041'],
+  zoneNames: [
+    'Zone 1: Flayed Flesh / Sinew',
+    'Zone 2: Ossified Bone / Marble',
+    'Zone 3: Rusted Iron / Cage',
+    'Zone 4: Crimson Vestments / Cloak',
+    'Zone 5: Necro-Ichor / Gold Trim'
+  ],
+
+  init() {
+    const tierSel = document.getElementById('forge-tier-sel');
+    if (tierSel) {
+      tierSel.innerHTML = TIERS.map(t => `<option value="${t.id}">${t.code}: ${t.name} (◈${fmtNum(t.val)})</option>`).join('');
+    }
+    this.renderHexZones();
+    this.bindEvents();
+    this.updateConfig();
+  },
+
+  renderHexZones() {
+    const wrap = document.getElementById('hex-studio-zones');
+    if (!wrap) return;
+    const out = ['<div class="control-label"><span>3. 5-Zone #RRGGBB Biomechanical &amp; Ossuary Hex Paint Studio</span></div>'];
+    for (let z = 0; z < 5; z++) {
+      const cur = this.hexColors[z];
+      const sw = QUICK_SWATCHES.map(c => `<div class="color-swatch" style="background:${c};" onclick="CustomForge.setZoneHex(${z},'${c}')"></div>`).join('');
+      out.push(`
+        <div style="margin-bottom:5px;">
+          <div style="font-size:8px; color:var(--text-dim); margin-bottom:2px;">${this.zoneNames[z]}</div>
+          <div class="paint-zone-row">
+            <input type="text" class="hex-input" id="hex-txt-${z}" value="${cur}" maxlength="7" oninput="CustomForge.onHexInput(${z}, this.value)" />
+            <input type="color" class="color-wheel-input" id="hex-pick-${z}" value="${cur}" oninput="CustomForge.setZoneHex(${z}, this.value)" />
+            <div class="swatch-row">${sw}</div>
+          </div>
+        </div>
+      `);
+    }
+    wrap.innerHTML = out.join('');
+  },
+
+  onHexInput(z, val) {
+    let clean = val.trim().toUpperCase();
+    if (!clean.startsWith('#')) clean = '#' + clean;
+    if (/^#[0-9A-F]{6}$/.test(clean)) {
+      this.hexColors[z] = clean;
+      const p = document.getElementById(`hex-pick-${z}`);
+      if (p) p.value = clean;
+      this.rebuildPreview();
+    }
+  },
+
+  setZoneHex(z, hexStr) {
+    const clean = hexStr.trim().toUpperCase();
+    this.hexColors[z] = clean;
+    const t = document.getElementById(`hex-txt-${z}`);
+    const p = document.getElementById(`hex-pick-${z}`);
+    if (t) t.value = clean;
+    if (p) p.value = clean;
+    this.rebuildPreview();
+  },
+
+  applyPreset(idx) {
+    const p = OCCULT_PRESETS[idx] || OCCULT_PRESETS[0];
+    for (let i = 0; i < 5; i++) this.setZoneHex(i, p[i]);
+    UI.toast('🎨 Applied Occult Biomechanical Color Preset!');
+  },
+
+  getPreviewUnit() {
+    const tier = parseInt(document.getElementById('forge-tier-sel')?.value || '0', 10);
+    const squadSize = parseInt(document.getElementById('forge-squad-sel')?.value || '1', 10);
+    const beard = document.getElementById('forge-beard-sel')?.value || 'braided_sinew_locks';
+    const pose = document.getElementById('forge-pose-sel')?.value || 'multi_arm_invocation';
+    const armor = document.getElementById('forge-armor-sel')?.value || 'flayed_biomech';
+    const helm = document.getElementById('forge-helm-sel')?.value || 'iron_maiden_cage';
+    const weapon = document.getElementById('forge-weapon-sel')?.value || 'quad_bone_scythes';
+    const back = document.getElementById('forge-back-sel')?.value || 'skeletal_seraph_wings';
+    const plinth = document.getElementById('forge-plinth-sel')?.value || 'ossuary_skull_mound';
+
+    return {
+      id: 'FORGE_PREVIEW',
+      tier, faction: 0, division: 0, squadSize, beard,
+      customParts: { pose, armor, helm, weapon, back, plinth, squadSize, beard },
+      customHexColors: [...this.hexColors]
+    };
+  },
+
+  updateConfig() {
+    const u = this.getPreviewUnit();
+    const tData = TIERS[u.tier] || TIERS[0];
+    const sqCfg = SQUAD_CFG[u.squadSize] || SQUAD_CFG[1];
+    const credCost = Math.max(12, Math.round(tData.val * sqCfg.mult * 0.85));
+    const supCost = (u.tier + 1) * 15 * u.squadSize;
+    const lbl = document.getElementById('forge-cost-label');
+    if (lbl) lbl.textContent = `Cost: ◈${fmtNum(credCost)} + ${fmtNum(supCost)} Ichor`;
+    this.rebuildPreview();
+  },
+
+  rebuildPreview() {
+    const u = this.getPreviewUnit();
+    VoxelEngine.buildUnitModel(u);
+    this.snapshot = VoxelEngine.createSnapshot();
+    this.renderFrame();
+  },
+
+  renderFrame() {
+    const cvs = document.getElementById('forge-canvas');
+    if (cvs && this.snapshot) {
+      VoxelEngine.renderSnapshotToCanvas(this.snapshot, this.yaw, this.pitch, this.zoomLevel, cvs, this.wireframe);
+    }
+  },
+
+  toggleSpin() { this.spinning = !this.spinning; },
+  toggleWireframe() { this.wireframe = !this.wireframe; this.renderFrame(); },
+  zoom(delta) {
+    this.zoomLevel = Math.max(0.65, Math.min(1.65, this.zoomLevel + delta));
+    this.renderFrame();
+  },
+
+  randomize() {
+    const randSel = (id) => {
+      const el = document.getElementById(id);
+      if (el && el.options.length > 0) {
+        el.selectedIndex = Math.floor(Math.random() * el.options.length);
+      }
+    };
+    randSel('forge-squad-sel');
+    randSel('forge-beard-sel');
+    randSel('forge-pose-sel');
+    randSel('forge-armor-sel');
+    randSel('forge-helm-sel');
+    randSel('forge-weapon-sel');
+    randSel('forge-back-sel');
+    randSel('forge-plinth-sel');
+    for (let z = 0; z < 5; z++) {
+      this.setZoneHex(z, QUICK_SWATCHES[Math.floor(Math.random() * QUICK_SWATCHES.length)]);
+    }
+    this.updateConfig();
+    UI.toast('🎲 Randomized Biomechanical Construct, Cage, Grafts & Palette!');
+  },
+
+  forgeUnit(autoListOnAuction) {
+    const preview = this.getPreviewUnit();
+    const tData = TIERS[preview.tier] || TIERS[0];
+    const sqCfg = SQUAD_CFG[preview.squadSize] || SQUAD_CFG[1];
+    const credCost = Math.max(12, Math.round(tData.val * sqCfg.mult * 0.85));
+    const supCost = (preview.tier + 1) * 15 * preview.squadSize;
+
+    if (State.funds < credCost) return UI.toast(`❌ Need ◈${fmtNum(credCost)} Souls/Credits!`);
+    if (State.fuel < supCost) return UI.toast(`❌ Need ${fmtNum(supCost)} Ichor Supply!`);
+
+    State.funds -= credCost;
+    State.fuel -= supCost;
+
+    let grade = ARTISAN_GRADES[0];
+    if (State.godMode) {
+      grade = ARTISAN_GRADES[4];
+    } else {
+      const r = Math.random();
+      let acc = 0;
+      for (const g of ARTISAN_GRADES) {
+        acc += g.chance;
+        if (r <= acc) { grade = g; break; }
+      }
+    }
+
+    const mult = grade.minM + Math.random() * (grade.maxM - grade.minM);
+    if (grade.id === 4) State.stats.masterworks++;
+    State.stats.forged++;
+
+    const customName = document.getElementById('forge-custom-name')?.value.trim();
+    const unit = createCollectorUnit(preview.tier, Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), {
+      squadSize: preview.squadSize,
+      beard: preview.beard,
+      mult,
+      name: customName || `${grade.name} ${tData.name} (${sqCfg.title})`,
+      finish: `${grade.name} (${mult.toFixed(1)}x)`,
+      customParts: preview.customParts,
+      customHexColors: preview.customHexColors,
+      artisanGrade: grade.name
+    });
+
+    const vkey = getUnitVisualKey(unit);
+    ThumbCache.set(vkey, VoxelEngine.bakeThumbnailDataURL(unit));
+
+    Game.addUnitToInventory(unit);
+
+    const banner = document.getElementById('forge-roll-banner');
+    if (banner) {
+      banner.innerHTML = `<span style="color:${grade.color}; font-weight:900;">⚙️ SPLICED ${grade.name} (${mult.toFixed(2)}x)!</span> Value: <b class="val-gold">◈${fmtNum(unit.val)}</b>`;
+    }
+
+    if (autoListOnAuction) {
+      const listed = Game.listUnitInSellerAuction(unit.id);
+      if (listed) UI.switchTab('tab-auctions');
+    } else {
+      UI.toast(`⚙️ Spliced ${unit.name} appraised at ◈${fmtNum(unit.val)}!`);
+    }
+    UI.refreshAll();
+  },
+
+  bindEvents() {
+    const cvs = document.getElementById('forge-canvas');
+    if (!cvs) return;
+    const start = (x, y) => { this.dragging = true; this.spinning = false; this.lastX = x; this.lastY = y; };
+    const move = (x, y) => {
+      if (!this.dragging) return;
+      this.yaw += (x - this.lastX) * 0.012;
+      this.pitch = Math.max(-0.45, Math.min(0.80, this.pitch + (y - this.lastY) * 0.012));
+      this.lastX = x; this.lastY = y;
+      this.renderFrame();
+    };
+    const end = () => { this.dragging = false; };
+    cvs.addEventListener('mousedown', e => start(e.clientX, e.clientY));
+    window.addEventListener('mousemove', e => move(e.clientX, e.clientY));
+    window.addEventListener('mouseup', end);
+    cvs.addEventListener('touchstart', e => { if (e.touches[0]) start(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+    cvs.addEventListener('touchmove', e => { if (e.touches[0]) move(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+    cvs.addEventListener('touchend', end);
+  }
+};
+
+/* ============================================================================
+   5. 3D INSPECTOR MODAL (#inspector-canvas) WITH PNG DOWNLOAD
+   ============================================================================ */
+const Inspector = {
+  openFlag: false,
+  yaw: 0.62,
+  pitch: 0.26,
+  zoomLevel: 1.0,
+  spinning: true,
+  dragging: false,
+  lastX: 0,
+  lastY: 0,
+  snapshot: null,
+  currentUnit: null,
+
+  init() {
+    const cvs = document.getElementById('inspector-canvas');
+    if (!cvs) return;
+    const start = (x, y) => { this.dragging = true; this.spinning = false; this.lastX = x; this.lastY = y; };
+    const move = (x, y) => {
+      if (!this.dragging) return;
+      this.yaw += (x - this.lastX) * 0.012;
+      this.pitch = Math.max(-0.45, Math.min(0.80, this.pitch + (y - this.lastY) * 0.012));
+      this.lastX = x; this.lastY = y;
+      this.renderFrame();
+    };
+    const end = () => { this.dragging = false; };
+    cvs.addEventListener('mousedown', e => start(e.clientX, e.clientY));
+    window.addEventListener('mousemove', e => move(e.clientX, e.clientY));
+    window.addEventListener('mouseup', end);
+    cvs.addEventListener('touchstart', e => { if (e.touches[0]) start(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+    cvs.addEventListener('touchmove', e => { if (e.touches[0]) move(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+    cvs.addEventListener('touchend', end);
+  },
+
+  open(source, idOrIdx) {
+    let unit = null;
+    if (source === 'BUYER') {
+      unit = State.buyerAuction ? State.buyerAuction.unit : null;
+    } else if (source === 'SELLER') {
+      const slot = State.sellerAuctions[idOrIdx];
+      unit = slot ? slot.unit : null;
+    } else {
+      unit = State.units.find(u => u.id === idOrIdx);
+    }
+    if (!unit) return;
+
+    this.currentUnit = unit;
+    this.openFlag = true;
+    this.yaw = 0.62;
+    this.pitch = 0.26;
+    this.zoomLevel = 1.0;
+    this.spinning = true;
+
+    VoxelEngine.buildUnitModel(unit);
+    this.snapshot = VoxelEngine.createSnapshot();
+
+    const tData = TIERS[unit.tier] || TIERS[0];
+    const fData = FACTIONS[unit.faction || 0] || FACTIONS[0];
+    const sqCfg = SQUAD_CFG[unit.squadSize || 1] || SQUAD_CFG[1];
+
+    document.getElementById('insp-name').textContent = unit.name;
+    document.getElementById('insp-sub').textContent = `${tData.code} ${tData.name} • ${sqCfg.title} • ${unit.finish}`;
+    document.getElementById('insp-details').innerHTML = `
+      <div><b>Codex Number:</b> #${String(unit.dexNum).padStart(4, '0')} / 2000</div>
+      <div><b>Occult Covenant:</b> ${fData.name}</div>
+      <div><b>Formation Scale:</b> ${sqCfg.badge} (${sqCfg.mult}x Stats)</div>
+      <div><b>Cranial Tubing/Locks:</b> ${(unit.beard || 'braided_sinew_locks').replace(/_/g, ' ')}</div>
+      <div><b>Appraisal Value:</b> <span class="val-gold">◈${fmtNum(unit.val)}</span></div>
+      <div><b>Construct Stats:</b> ❤️ ${fmtNum(unit.hp)}/${fmtNum(unit.maxHp)} Husk • ⚔️ ${fmtNum(unit.atk)} Torment</div>
+    `;
+    document.getElementById('insp-code').textContent = getUnitTradeCode(unit);
+    document.getElementById('inspect-vox-stats').textContent = `${fmtNum(this.snapshot.count)} Surface Voxels`;
+
+    document.getElementById('inspect-modal').classList.add('open');
+    this.renderFrame();
+  },
+
+  renderFrame() {
+    if (!this.openFlag || !this.snapshot) return;
+    const cvs = document.getElementById('inspector-canvas');
+    if (cvs) VoxelEngine.renderSnapshotToCanvas(this.snapshot, this.yaw, this.pitch, this.zoomLevel, cvs, false);
+  },
+
+  toggleSpin() { this.spinning = !this.spinning; },
+  zoom(d) { this.zoomLevel = Math.max(0.65, Math.min(1.65, this.zoomLevel + d)); this.renderFrame(); },
+  downloadPNG() {
+    const cvs = document.getElementById('inspector-canvas');
+    if (!cvs || !this.currentUnit) return;
+    const link = document.createElement('a');
+    link.download = `${this.currentUnit.name.replace(/\s+/g, '_')}_128v.png`;
+    link.href = cvs.toDataURL('image/png');
+    link.click();
+    UI.toast('📸 Downloaded 3D Construct Snapshot PNG!');
+  },
+  copyTradeCode() {
+    const code = document.getElementById('insp-code')?.textContent || '';
+    const ta = document.createElement('textarea');
+    ta.value = code;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    UI.toast(`📋 Copied Trade Code: ${code}`);
+  },
+  close() {
+    this.openFlag = false;
+    document.getElementById('inspect-modal').classList.remove('open');
+  }
+};
+
+/* ============================================================================
+   6. CORE GAMEPLAY CONTROLLER (RELIQUARIES, AUCTIONS, PATROLS, QOL & GOD MODE)
+   ============================================================================ */
+const WARBOXES = [
+  { id: 0, name: 'Rusted Ossuary Reliquary',      cost: 20,    minT: 0, maxT: 3,  desc: 'Unseals T1–T4 Stitch-Husks, Ossuary Thralls & Flayed Cenobites.' },
+  { id: 1, name: 'Carrara Marble Sarcophagus',    cost: 200,   minT: 2, maxT: 6,  desc: 'Unseals T3–T7 Marrow Automatons, Marble Reliquaries & Inquisitors.' },
+  { id: 2, name: 'Six-Winged Seraph Vault',       cost: 2000,  minT: 5, maxT: 10, desc: 'Unseals T6–T11 Grafted Seraphs, Hellforge Colossi & Executioners.' },
+  { id: 3, name: 'Primeval Demiurge Monolith',    cost: 15000, minT: 8, maxT: 14, desc: 'Unseals T9–T15 Abyssal Hierophants, Apostles & Primeval Demiurges.' }
+];
+
+const PILOT_PODS = [
+  { id: 0, name: 'Novitiate Flesh-Cell',         cost: 60,    tierBonus: 0 },
+  { id: 1, name: 'Cenobite Choir Chamber',       cost: 450,   tierBonus: 3 },
+  { id: 2, name: 'Basilica of the Blind Seraph', cost: 3500,  tierBonus: 7 },
+  { id: 3, name: 'Grand Synod Archon Throne',    cost: 25000, tierBonus: 11 }
+];
+
+const Game = {
+  addUnitToInventory(unit) {
+    State.units.push(unit);
+    State.codex[unit.dexNum] = true;
+  },
+
+  toggleGodMode() {
+    State.godMode = !State.godMode;
+    if (State.godMode) {
+      State.funds += 10000000;
+      State.fuel += 100000;
+      State.tech = { yield: 20, fuel: 20, atk: 20, net: 20 };
+      UI.toast('⚡ GOD MODE ENABLED: +◈10,000,000 Credits, +100,000 Ichor Supply, Max Biogenesis Tech & 100% ★ MASTERWORK ★ Rolls!');
+    } else {
+      UI.toast('⚡ GOD MODE DISABLED.');
+    }
+    UI.refreshAll();
+  },
+
+  buyFuel(amt) {
+    const cost = Math.round(amt * 0.25);
+    if (State.funds < cost) return UI.toast(`❌ Need ◈${fmtNum(cost)} Credits!`);
+    State.funds -= cost;
+    State.fuel += amt;
+    UI.toast(`🩸 Synthesized +${fmtNum(amt)} Arterial Ichor Supply!`);
+    UI.refreshAll();
+  },
+
+  openWarbox(boxIdx, count) {
+    const box = WARBOXES[boxIdx];
+    if (!box) return;
+    const totalCost = box.cost * count;
+    if (State.funds < totalCost) return UI.toast(`❌ Need ◈${fmtNum(totalCost)} Credits!`);
+    State.funds -= totalCost;
+
+    const pulled = [];
+    for (let i = 0; i < count; i++) {
+      const t = box.minT + Math.floor(Math.pow(Math.random(), 1.55) * (box.maxT - box.minT + 1));
+      const f = Math.floor(Math.random() * 10);
+      const d = Math.floor(Math.random() * 10);
+      const u = createCollectorUnit(t, f, d);
+      this.addUnitToInventory(u);
+      pulled.push(u);
+      State.stats.unboxed++;
+    }
+
+    UI.showCratePulls(pulled);
+    UI.toast(`📦 Unsealed ${count}x ${box.name}!`);
+    UI.refreshAll();
+  },
+
+  openPilotPod(podIdx) {
+    const pod = PILOT_PODS[podIdx];
+    if (!pod) return;
+    if (State.funds < pod.cost) return UI.toast(`❌ Need ◈${fmtNum(pod.cost)} Credits!`);
+    State.funds -= pod.cost;
+    const p = createCommander(pod.tierBonus);
+    State.pilots.push(p);
+    UI.toast(`👑 Awakened ${p.name} (Rank ${p.rank})!`);
+    UI.refreshAll();
+  },
+
+  toggleVault(uid) {
+    const u = State.units.find(x => x.id === uid);
+    if (!u) return;
+    u.vaulted = !u.vaulted;
+    UI.renderRacks();
+  },
+
+  repairUnit(uid) {
+    const u = State.units.find(x => x.id === uid);
+    if (!u || u.hp >= u.maxHp) return;
+    const cost = Math.max(2, Math.round((u.maxHp - u.hp) * 0.05));
+    if (State.funds < cost) return UI.toast(`❌ Need ◈${fmtNum(cost)} Credits!`);
+    State.funds -= cost;
+    u.hp = u.maxHp;
+    UI.renderRacks();
+    UI.updateHUD();
+  },
+
+  repairAll() {
+    let total = 0;
+    for (const u of State.units) {
+      if (u.hp < u.maxHp) {
+        const c = Math.max(2, Math.round((u.maxHp - u.hp) * 0.05));
+        if (State.funds >= c) {
+          State.funds -= c;
+          u.hp = u.maxHp;
+          total++;
+        }
+      }
+    }
+    UI.toast(total > 0 ? `🔧 Sutured & Repaired ${total} Constructs!` : '✅ All Constructs are at 100% Husk Integrity.');
+    UI.refreshAll();
+  },
+
+  salvageUnit(uid) {
+    const idx = State.units.findIndex(x => x.id === uid);
+    if (idx === -1) return;
+    const u = State.units[idx];
+    if (u.vaulted) return UI.toast('🔒 Unvault construct before salvaging!');
+    if (u.isListing) return UI.toast('🔨 Construct is currently listed on auction!');
+    if (u.pilotId) {
+      const p = State.pilots.find(x => x.id === u.pilotId);
+      if (p) p.unitId = null;
+    }
+    const scrapVal = Math.max(5, Math.round(u.val * 0.35));
+    State.funds += scrapVal;
+    State.stats.totalEarned += scrapVal;
+    State.stats.salvaged++;
+    State.units.splice(idx, 1);
+    UI.toast(`♻️ Dissolved ${u.name} for ◈${fmtNum(scrapVal)} Soul Essence!`);
+    UI.refreshAll();
+  },
+
+  salvageLowAndDupes() {
+    const seenDex = new Set();
+    const keep = [];
+    let salvagedCount = 0;
+    let earned = 0;
+
+    const sorted = [...State.units].sort((a, b) => b.val - a.val);
+    for (const u of sorted) {
+      const isDupe = seenDex.has(u.dexNum);
+      seenDex.add(u.dexNum);
+      if (!u.vaulted && !u.isListing && u.sectorId === null && (u.tier <= 2 || isDupe) && keep.length >= 3) {
+        const scrap = Math.max(5, Math.round(u.val * 0.35));
+        earned += scrap;
+        salvagedCount++;
+        if (u.pilotId) {
+          const p = State.pilots.find(x => x.id === u.pilotId);
+          if (p) p.unitId = null;
+        }
+      } else {
+        keep.push(u);
+      }
+    }
+    State.units = keep;
+    State.funds += earned;
+    State.stats.totalEarned += earned;
+    State.stats.salvaged += salvagedCount;
+    UI.toast(salvagedCount > 0 ? `♻️ Batch-salvaged ${salvagedCount} duplicate/low constructs for +◈${fmtNum(earned)}!` : 'ℹ️ No eligible unvaulted low/duplicate constructs to salvage.');
+    UI.refreshAll();
+  },
+
+  assignPilot(uid, pid) {
+    const u = State.units.find(x => x.id === uid);
+    if (!u) return;
+    if (u.pilotId) {
+      const oldP = State.pilots.find(x => x.id === u.pilotId);
+      if (oldP) oldP.unitId = null;
+    }
+    if (!pid) {
+      u.pilotId = null;
+    } else {
+      const newP = State.pilots.find(x => x.id === pid);
+      if (newP) {
+        if (newP.unitId) {
+          const prevU = State.units.find(x => x.id === newP.unitId);
+          if (prevU) prevU.pilotId = null;
+        }
+        newP.unitId = u.id;
+        u.pilotId = newP.id;
+      }
+    }
+    UI.refreshAll();
+  },
+
+  autoEquipArchons() {
+    const idlePilots = State.pilots.filter(p => !p.unitId).sort((a, b) => b.rank - a.rank);
+    const targetUnits = State.units.filter(u => !u.pilotId).sort((a, b) => b.val - a.val);
+    let count = 0;
+    for (let i = 0; i < Math.min(idlePilots.length, targetUnits.length); i++) {
+      idlePilots[i].unitId = targetUnits[i].id;
+      targetUnits[i].pilotId = idlePilots[i].id;
+      count++;
+    }
+    UI.toast(count > 0 ? `⚡ Auto-bound ${count} Archons to top Constructs!` : 'ℹ️ No unbound Archons or Constructs available.');
+    UI.refreshAll();
+  },
+
+  assignSector(uid, secVal) {
+    const u = State.units.find(x => x.id === uid);
+    if (!u) return;
+    if (secVal === '' || secVal === null) {
+      u.sectorId = null;
+    } else {
+      const sid = parseInt(secVal, 10);
+      const sec = SECTORS[sid];
+      if (sec && u.tier < sec.minTier) {
+        return UI.toast(`❌ Requires Tier ${TIERS[sec.minTier].code} or higher!`);
+      }
+      u.sectorId = sid;
+    }
+    UI.refreshAll();
+  },
+
+  assignAllIdleToPatrol() {
+    let count = 0;
+    for (const u of State.units) {
+      if (u.sectorId === null && !u.isListing && u.hp > 0) {
+        let bestSec = 0;
+        for (const s of SECTORS) {
+          if (u.tier >= s.minTier) bestSec = s.id;
+        }
+        u.sectorId = bestSec;
+        count++;
+      }
+    }
+    UI.toast(`🚩 Deployed ${count} Constructs to Abyssal Sector Patrols!`);
+    UI.refreshAll();
+  },
+
+  recallAllPatrols() {
+    for (const u of State.units) u.sectorId = null;
+    UI.toast('🛑 Recalled all Constructs to Ossuary Vaults.');
+    UI.refreshAll();
+  },
+
+  buyTech(key) {
+    const lvl = State.tech[key] || 0;
+    if (lvl >= 20) return UI.toast('✅ Biogenesis Tech already at Max Level 20!');
+    const cost = Math.round(120 * Math.pow(1.65, lvl));
+    if (State.funds < cost) return UI.toast(`❌ Need ◈${fmtNum(cost)} Credits!`);
+    State.funds -= cost;
+    State.tech[key] = lvl + 1;
+    UI.toast(`⚙️ Upgraded ${key.toUpperCase()} Biogenesis Tech to Level ${lvl + 1}!`);
+    UI.refreshAll();
+  },
+
+  /* ==========================================================================
+     TAB 4A: 1-LANE BARGAIN BUYER AUCTION (BUTTONS STRICTLY LABELED "BID")
+     ========================================================================== */
+  spawnBuyerAuction() {
+    const maxUnlockedTier = Math.min(14, Math.max(2, ...State.units.map(u => u.tier), 2));
+    const t = Math.floor(Math.random() * (maxUnlockedTier + 1));
+    const f = Math.floor(Math.random() * 10);
+    const d = Math.floor(Math.random() * 10);
+    const unit = createCollectorUnit(t, f, d);
+    const startPct = 0.12 + Math.random() * 0.08;
+    const startBid = Math.max(2, Math.round(unit.val * startPct));
+
+    State.buyerAuction = {
+      unit,
+      curBid: startBid,
+      highBidder: 'Ossuary Broker',
+      playerIsHigh: false,
+      timeLeft: 10.0,
+      intermission: 0,
+      aiStunTimer: 0,
+      verdictText: ''
+    };
+    UI.renderBuyerAuctionFull();
+  },
+
+  bidOnBuyerAuction(inc) {
+    const b = State.buyerAuction;
+    if (!b || b.intermission > 0 || b.timeLeft <= 0) return;
+    const nextBid = b.curBid + Number(inc);
+    if (State.funds < nextBid) return UI.toast(`❌ Need ◈${fmtNum(nextBid)} Credits to place bid!`);
+
+    b.curBid = nextBid;
+    b.highBidder = 'YOU (Grand Splicer)';
+    b.playerIsHigh = true;
+    b.aiStunTimer = 0.65;
+    UI.updateBuyerAuctionDOM();
+  },
+
+  /* ==========================================================================
+     TAB 4B: 5-LANE SYNDICATE SELLER AUCTIONS (2x-20x BID WAR SPIKES)
+     ========================================================================== */
+  listUnitInSellerAuction(uid) {
+    const u = State.units.find(x => x.id === uid);
+    if (!u) return false;
+    if (u.vaulted) { UI.toast('🔒 Unvault construct before listing!'); return false; }
+    if (u.isListing) { UI.toast('🔨 Already listed on auction!'); return false; }
+    const laneIdx = State.sellerAuctions.findIndex(s => s === null);
+    if (laneIdx === -1) { UI.toast('❌ All 5 Seller Lanes are full!'); return false; }
+
+    u.isListing = true;
+    u.sectorId = null;
+    const startBid = Math.max(5, Math.round(u.val * 0.40));
+    State.sellerAuctions[laneIdx] = {
+      unit: u,
+      curBid: startBid,
+      highBidder: 'Opening Reserve (40%)',
+      hasNpcBid: false,
+      bidWarMult: 1,
+      timeLeft: 20.0
+    };
+    UI.renderSellerAuctions();
+    UI.renderRacks();
+    return true;
+  },
+
+  autoFillSellerLanes() {
+    const candidates = State.units
+      .filter(u => !u.vaulted && !u.isListing && u.sectorId === null)
+      .sort((a, b) => b.val - a.val);
+    let listed = 0;
+    for (const u of candidates) {
+      if (State.sellerAuctions.every(s => s !== null)) break;
+      if (this.listUnitInSellerAuction(u.id)) listed++;
+    }
+    UI.toast(listed > 0 ? `🔨 Listed ${listed} Constructs in Syndicate Seller Lanes!` : 'ℹ️ No unvaulted idle Constructs or empty lanes.');
+  },
+
+  /* ==========================================================================
+     TAB 6: AUTOMATIONS, COMMISSIONS & 150 GRAND SYNOD TRIALS
+     ========================================================================== */
+  toggleAuto(key) {
+    State.auto[key] = !State.auto[key];
+    UI.renderCommand();
+  },
+
+  generateCommissions() {
+    State.commissions = [];
+    for (let i = 0; i < 6; i++) {
+      const reqTier = Math.min(14, Math.floor(i * 2));
+      const reqSquad = i >= 4 ? 5 : (i >= 2 ? 3 : 1);
+      const tData = TIERS[reqTier];
+      const rewardCreds = Math.round(tData.val * SQUAD_CFG[reqSquad].mult * 2.2);
+      State.commissions.push({
+        id: 'C' + (NEXT_ID++),
+        title: `${FACTIONS[i % 10].name} Tithe`,
+        reqTier,
+        reqSquad,
+        rewardCreds
+      });
+    }
+  },
+
+  fulfillCommission(cid) {
+    const idx = State.commissions.findIndex(c => c.id === cid);
+    if (idx === -1) return;
+    const comm = State.commissions[idx];
+    const uIdx = State.units.findIndex(u => !u.vaulted && !u.isListing && u.tier >= comm.reqTier && (u.squadSize || 1) >= comm.reqSquad);
+    if (uIdx === -1) {
+      return UI.toast(`❌ Need an unvaulted ${TIERS[comm.reqTier].code}+ (${SQUAD_CFG[comm.reqSquad].badge}+) Construct!`);
+    }
+    const u = State.units[uIdx];
+    if (u.pilotId) {
+      const p = State.pilots.find(x => x.id === u.pilotId);
+      if (p) p.unitId = null;
+    }
+    State.units.splice(uIdx, 1);
+    State.funds += comm.rewardCreds;
+    State.stats.totalEarned += comm.rewardCreds;
+    State.stats.commissionsDone++;
+
+    const bonusUnit = createCollectorUnit(Math.min(14, comm.reqTier + 1), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10));
+    this.addUnitToInventory(bonusUnit);
+
+    const nextTier = Math.min(14, Math.floor(Math.random() * 10));
+    const nextSquad = Math.random() < 0.35 ? 5 : (Math.random() < 0.5 ? 3 : 1);
+    State.commissions[idx] = {
+      id: 'C' + (NEXT_ID++),
+      title: `${FACTIONS[Math.floor(Math.random() * 10)].name} Pact`,
+      reqTier: nextTier,
+      reqSquad: nextSquad,
+      rewardCreds: Math.round(TIERS[nextTier].val * SQUAD_CFG[nextSquad].mult * 2.2)
+    };
+
+    UI.toast(`📜 Fulfilled Synod Commission! +◈${fmtNum(comm.rewardCreds)} & Bonus ${bonusUnit.name}!`);
+    UI.refreshAll();
+  },
+
+  claimMilestone(mId) {
+    const m = MILESTONES[mId];
+    if (!m || State.claimedMilestones[mId] || m.getProg() < m.target) return;
+    State.claimedMilestones[mId] = true;
+    State.funds += m.reward;
+    State.stats.totalEarned += m.reward;
+    UI.toast(`🏆 Claimed Synod Trial #${mId + 1}: +◈${fmtNum(m.reward)}!`);
+    UI.refreshAll();
+  },
+
+  claimAllMilestones() {
+    let count = 0, total = 0;
+    for (let i = 0; i < MILESTONES.length; i++) {
+      const m = MILESTONES[i];
+      if (!State.claimedMilestones[i] && m.getProg() >= m.target) {
+        State.claimedMilestones[i] = true;
+        State.funds += m.reward;
+        State.stats.totalEarned += m.reward;
+        count++;
+        total += m.reward;
+      }
+    }
+    UI.toast(count > 0 ? `🏆 Claimed ${count} Trials for +◈${fmtNum(total)}!` : 'ℹ️ No completed Trials ready to claim.');
+    UI.refreshAll();
+  },
+
+  importTradeCode() {
+    const raw = (document.getElementById('trade-code-input')?.value || '').trim().toUpperCase();
+    if (!raw) return;
+    if (raw.startsWith('SYN-') || raw.startsWith('CMD-')) {
+      const p = createCommander(5);
+      State.pilots.push(p);
+      UI.toast(`👑 Imported Synod Archon ${p.name}!`);
+    } else if (raw.startsWith('OMC-') || raw.startsWith('WFC-')) {
+      const parts = raw.split('-');
+      const codePart = parts[1] || '0010';
+      const tier = Math.min(14, parseInt(codePart[0] || '0', 36) || 0);
+      const div = Math.min(9, parseInt(codePart[1] || '0', 36) || 0);
+      const sq = [1, 3, 5].includes(parseInt(codePart[2] || '1', 36)) ? parseInt(codePart[2], 36) : 1;
+      const bIdx = parseInt(codePart[3] || '0', 10) || 0;
+      const hexes = parts.slice(2, 7).map(h => '#' + h.padEnd(6, 'F').slice(0, 6));
+      while (hexes.length < 5) hexes.push('#942A30');
+      const u = createCollectorUnit(tier, 0, div, {
+        squadSize: sq,
+        beard: TRACE_STYLES[bIdx % TRACE_STYLES.length],
+        customHexColors: hexes
+      });
+      this.addUnitToInventory(u);
+      UI.toast(`📡 Imported Custom Spliced Construct ${u.name}!`);
+    } else if (raw.startsWith('OM-') || raw.startsWith('WF-')) {
+      const dex = parseInt(raw.slice(3), 36) || 1;
+      const info = decodeCodexNum(dex);
+      const u = createCollectorUnit(info.tier, info.faction, info.division, {
+        squadSize: info.squadSize,
+        beard: info.beard
+      });
+      this.addUnitToInventory(u);
+      UI.toast(`📡 Imported #${String(u.dexNum).padStart(4, '0')} ${u.name}!`);
+    } else {
+      return UI.toast('❌ Invalid Trade Code format!');
+    }
+    UI.closeModal('code-modal');
+    UI.refreshAll();
+  }
+};
+
+/* ============================================================================
+   7. TAB 5: 1v1 / 3v3 / 5v5 RITUAL ARENA WARGAME
+   ============================================================================ */
+const Arena = {
+  active: false,
+  playerTeam: [],
+  enemyTeam: [],
+
+  startMatch(teamSize) {
+    const eligible = State.units.filter(u => u.hp > 0 && !u.isListing).sort((a, b) => b.atk - a.atk);
+    if (eligible.length === 0) return UI.toast('❌ Need at least 1 intact Construct in Owned Constructs!');
+
+    this.playerTeam = eligible.slice(0, teamSize).map(u => ({
+      ref: u,
+      name: u.name,
+      hp: u.hp,
+      maxHp: u.maxHp,
+      atk: Math.round(u.atk * (1 + (State.tech.atk || 0) * 0.04)),
+      group: u.group,
+      squadSize: u.squadSize || 1,
+      unitObj: u
+    }));
+
+    this.enemyTeam = [];
+    for (let i = 0; i < this.playerTeam.length; i++) {
+      const pUnit = this.playerTeam[i].ref;
+      const eTier = Math.max(0, Math.min(14, pUnit.tier + (Math.random() < 0.35 ? 0 : -1)));
+      const eUnit = createCollectorUnit(eTier, Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), {
+        squadSize: pUnit.squadSize || 1
+      });
+      this.enemyTeam.push({
+        name: `Rival ${eUnit.name}`,
+        hp: eUnit.hp,
+        maxHp: eUnit.maxHp,
+        atk: eUnit.atk,
+        group: eUnit.group,
+        squadSize: eUnit.squadSize || 1,
+        unitObj: eUnit
+      });
+    }
+
+    this.active = true;
+    document.getElementById('arena-status-banner').textContent = `⚔️ ${teamSize}v${teamSize} Ritual Arena Active! Select Tactical Order below:`;
+    document.getElementById('arena-log').innerHTML = `<div>⛓️ Labyrinth gates seal! ${this.playerTeam.length}v${this.enemyTeam.length} Occult Clash initiated!</div>`;
+    this.renderTeams();
+  },
+
+  issueOrder(orderKey) {
+    if (!this.active) return UI.toast('⚔️ Start a 1v1, 3v3, or 5v5 Ritual Clash first!');
+    const d1 = 1 + Math.floor(Math.random() * 6);
+    const d2 = 1 + Math.floor(Math.random() * 6);
+    document.getElementById('die-1').textContent = d1;
+    document.getElementById('die-2').textContent = d2;
+    const rollMult = (d1 + d2) / 7;
+
+    const logEl = document.getElementById('arena-log');
+    const appendLog = (msg) => {
+      const div = document.createElement('div');
+      div.innerHTML = msg;
+      logEl.prepend(div);
+    };
+
+    for (const p of this.playerTeam) {
+      if (p.hp <= 0) continue;
+      if (orderKey === 'RALLY') {
+        const heal = Math.round(p.maxHp * 0.25);
+        p.hp = Math.min(p.maxHp, p.hp + heal);
+        appendLog(`<span class="val-emerald">🩸 ${p.name} grafts +${fmtNum(heal)} Husk Integrity!</span>`);
+        continue;
+      }
+      const aliveEnemies = this.enemyTeam.filter(e => e.hp > 0);
+      if (aliveEnemies.length === 0) break;
+      const target = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
+
+      // Executioner [A] > Ossuary Bastion [B] > Seraph Stalker [C] > Executioner [A]
+      let counterMult = 1.0;
+      if ((p.group === 'A' && target.group === 'B') || (p.group === 'B' && target.group === 'C') || (p.group === 'C' && target.group === 'A')) {
+        counterMult = 1.45;
+      }
+      const squadBonus = p.squadSize === 5 ? 1.25 : (p.squadSize === 3 ? 1.12 : 1.0);
+      const dmg = Math.max(5, Math.round(p.atk * rollMult * counterMult * squadBonus * (orderKey === 'CHARGE' ? 1.2 : 1.0)));
+      target.hp = Math.max(0, target.hp - dmg);
+      appendLog(`🗡️ <b>${p.name}</b> rends ${target.name} for <b class="val-gold">${fmtNum(dmg)} DMG</b>${counterMult > 1 ? ' [COUNTER +45%]' : ''}!`);
+    }
+
+    if (this.enemyTeam.every(e => e.hp <= 0)) {
+      this.active = false;
+      State.stats.arenasWon++;
+      const totalEnemyVal = this.enemyTeam.reduce((s, e) => s + e.unitObj.val, 0);
+      const spoils = Math.max(25, Math.round(totalEnemyVal * 0.55));
+      State.funds += spoils;
+      State.stats.totalEarned += spoils;
+
+      const capChance = 0.45 + (State.tech.net || 0) * 0.02;
+      let capMsg = '';
+      if (Math.random() <= capChance) {
+        const prize = this.enemyTeam[Math.floor(Math.random() * this.enemyTeam.length)].unitObj;
+        Game.addUnitToInventory(prize);
+        State.stats.unitsCaptured++;
+        capMsg = ` + CAPTURED ${prize.name}!`;
+      }
+      document.getElementById('arena-status-banner').textContent = `🏆 VICTORY! Harvested ◈${fmtNum(spoils)}${capMsg}`;
+      UI.toast(`🏆 Ritual Arena Victory! +◈${fmtNum(spoils)}${capMsg}`);
+      this.renderTeams();
+      UI.refreshAll();
+      return;
+    }
+
+    for (const e of this.enemyTeam) {
+      if (e.hp <= 0) continue;
+      const alivePlayers = this.playerTeam.filter(p => p.hp > 0);
+      if (alivePlayers.length === 0) break;
+      const target = alivePlayers[Math.floor(Math.random() * alivePlayers.length)];
+      const shieldMit = orderKey === 'WALL' ? 0.55 : 0.85;
+      const dmg = Math.max(3, Math.round(e.atk * 0.75 * shieldMit));
+      target.hp = Math.max(0, target.hp - dmg);
+      target.ref.hp = target.hp;
+      appendLog(`<span class="val-crimson">⛓️ ${e.name} flays ${target.name} for ${fmtNum(dmg)} DMG!</span>`);
+    }
+
+    if (this.playerTeam.every(p => p.hp <= 0)) {
+      this.active = false;
+      document.getElementById('arena-status-banner').textContent = '💀 CONSTRUCTS SHATTERED! Repair your Husks in Tab 1.';
+    }
+
+    this.renderTeams();
+    UI.updateHUD();
+  },
+
+  renderTeams() {
+    const renderSlot = (f) => {
+      const vkey = getUnitVisualKey(f.unitObj);
+      const thumb = getOrQueueThumb(f.unitObj);
+      const pct = Math.max(0, Math.min(100, Math.round((f.hp / f.maxHp) * 100)));
+      const grpName = f.group === 'A' ? '🗡️EXEC' : (f.group === 'B' ? '🏛️OSSU' : '👁️SERA');
+      return `
+        <div class="fighter-slot ${f.hp <= 0 ? 'dead' : ''}">
+          <img src="${thumb}" data-vkey="${vkey}" style="width:44px; height:44px; border:1px solid #334155; background:#07090e;" />
+          <div style="flex:1; min-width:0;">
+            <div style="font-size:10px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${f.name}</div>
+            <div style="font-size:9px; color:var(--text-dim);">❤️ ${fmtNum(f.hp)}/${fmtNum(f.maxHp)} • ⚔️ ${fmtNum(f.atk)} • [${grpName}]</div>
+            <div class="hp-bar-outer"><div class="hp-bar-inner" style="width:${pct}%;"></div></div>
+          </div>
+        </div>
+      `;
+    };
+    document.getElementById('arena-player-team').innerHTML = this.playerTeam.map(renderSlot).join('');
+    document.getElementById('arena-enemy-team').innerHTML = this.enemyTeam.map(renderSlot).join('');
+  }
+};
+
+/* ============================================================================
+   8. 150 GRAND SYNOD CHRONICLE TRIALS ACROSS 6 BOOKS
+   ============================================================================ */
+const MILESTONES = [];
+(function build150Milestones() {
+  const books = [
+    { b: 0, title: 'Flesh Harvester',    stat: () => State.units.length,          scale: 2,   rew: 100 },
+    { b: 1, title: 'Soul Splicer',       stat: () => State.stats.forged,          scale: 1,   rew: 180 },
+    { b: 2, title: 'Ritual Executioner', stat: () => State.stats.arenasWon,       scale: 1,   rew: 250 },
+    { b: 3, title: 'Synod Treasury',     stat: () => State.stats.totalEarned,     scale: 500, rew: 300 },
+    { b: 4, title: 'Reliquary Broker',   stat: () => State.stats.auctionsSold + State.stats.auctionsWon, scale: 1, rew: 220 },
+    { b: 5, title: 'Demiurge Codex',     stat: () => Object.keys(State.codex).length, scale: 3, rew: 400 }
+  ];
+  for (let b = 0; b < 6; b++) {
+    const cfg = books[b];
+    for (let i = 1; i <= 25; i++) {
+      const target = Math.max(1, Math.round(i * cfg.scale * (b === 3 ? i : 1)));
+      const reward = Math.round(cfg.rew * i * (1 + b * 0.5));
+      MILESTONES.push({
+        id: MILESTONES.length,
+        book: b,
+        name: `${cfg.title} Trial #${i}`,
+        target,
+        reward,
+        getProg: cfg.stat
+      });
+    }
+  }
+})();
+
+/* ============================================================================
+   9. UI RENDERER (ZERO innerHTML += IN LOOPS, INSTANT SVG + 3D THUMB QUEUE)
+   ============================================================================ */
+const UI = {
+  activeTab: 'tab-racks',
+
+  switchTab(tabId) {
+    this.activeTab = tabId;
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === tabId));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-tab') === tabId));
+    this.refreshAll();
+  },
+
+  openModal(id) { document.getElementById(id)?.classList.add('open'); },
+  closeModal(id) { document.getElementById(id)?.classList.remove('open'); },
+
+  toast(msg) {
+    const wrap = document.getElementById('toast-wrap');
+    if (!wrap) return;
+    const el = document.createElement('div');
+    el.className = 'toast-msg';
+    el.textContent = msg;
+    wrap.appendChild(el);
+    setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 2800);
+  },
+
+  updateHUD() {
+    document.getElementById('hud-funds').textContent = '◈' + fmtNum(State.funds);
+    document.getElementById('hud-fuel').textContent = fmtNum(State.fuel);
+    document.getElementById('hud-fleet').textContent = fmtNum(State.units.length);
+    document.getElementById('hud-codex').textContent = `${Object.keys(State.codex).length}/2000`;
+    document.getElementById('hud-miles').textContent = `${Object.keys(State.claimedMilestones).length}/150`;
+    document.getElementById('rack-count').textContent = State.units.length;
+    const godBtn = document.getElementById('hud-god-btn');
+    if (godBtn) godBtn.textContent = State.godMode ? '⚡ GOD: ON' : '⚡ GOD: OFF';
+  },
+
+  refreshAll() {
+    this.updateHUD();
+    if (this.activeTab === 'tab-racks') {
+      this.renderRacks();
+      this.renderTechAndPilots();
+    } else if (this.activeTab === 'tab-forge') {
+      CustomForge.renderFrame();
+    } else if (this.activeTab === 'tab-boxes') {
+      this.renderBoxes();
+    } else if (this.activeTab === 'tab-auctions') {
+      this.renderBuyerAuctionFull();
+      this.renderSellerAuctions();
+    } else if (this.activeTab === 'tab-arena') {
+      this.renderSectors();
+    } else if (this.activeTab === 'tab-command') {
+      this.renderCommand();
+      this.renderMilestones();
+    }
+  },
+
+  renderRacks() {
+    const listEl = document.getElementById('rack-list');
+    if (!listEl) return;
+
+    const vaultCount = State.units.filter(u => u.vaulted).length;
+    const vcEl = document.getElementById('vault-inline-count');
+    if (vcEl) vcEl.textContent = vaultCount;
+
+    const vaultOnly = document.getElementById('filter-vault-only')?.checked;
+    const fSquad = document.getElementById('filter-squad')?.value || 'ALL';
+    const fTier = document.getElementById('filter-tier')?.value || 'ALL';
+    const fDiv = document.getElementById('filter-div')?.value || 'ALL';
+    const sortBy = document.getElementById('sort-racks')?.value || 'VAL_DESC';
+
+    let arr = State.units.filter(u => {
+      if (vaultOnly && !u.vaulted) return false;
+      if (fSquad !== 'ALL' && String(u.squadSize || 1) !== fSquad) return false;
+      if (fTier !== 'ALL' && String(u.tier) !== fTier) return false;
+      if (fDiv !== 'ALL' && String(u.division) !== fDiv) return false;
+      return true;
+    });
+
+    if (sortBy === 'VAL_DESC') arr.sort((a, b) => b.val - a.val);
+    else if (sortBy === 'TIER_DESC') arr.sort((a, b) => b.tier - a.tier || b.val - a.val);
+    else if (sortBy === 'SQUAD_DESC') arr.sort((a, b) => (b.squadSize || 1) - (a.squadSize || 1) || b.val - a.val);
+    else if (sortBy === 'DEX_ASC') arr.sort((a, b) => a.dexNum - b.dexNum);
+    else if (sortBy === 'HP_ASC') arr.sort((a, b) => (a.hp / a.maxHp) - (b.hp / b.maxHp));
+
+    const cards = [];
+    for (let i = 0; i < arr.length; i++) {
+      const u = arr[i];
+      const tData = TIERS[u.tier] || TIERS[0];
+      const sqCfg = SQUAD_CFG[u.squadSize || 1] || SQUAD_CFG[1];
+      const vkey = getUnitVisualKey(u);
+      const thumbSrc = getOrQueueThumb(u);
+      const hpPct = Math.max(0, Math.min(100, Math.round((u.hp / u.maxHp) * 100)));
+
+      const pilotOpts = ['<option value="">👑 No Archon</option>'];
+      for (const p of State.pilots) {
+        if (!p.unitId || p.unitId === u.id) {
+          pilotOpts.push(`<option value="${p.id}" ${u.pilotId === p.id ? 'selected' : ''}>${p.name} (+${p.yieldBuff}%)</option>`);
+        }
+      }
+
+      const secOpts = ['<option value="">🏛️ In Ossuary Vault</option>'];
+      for (const s of SECTORS) {
+        secOpts.push(`<option value="${s.id}" ${u.sectorId === s.id ? 'selected' : ''}>🌑 ${s.name} (${TIERS[s.minTier].code}+)</option>`);
+      }
+
+      const traceShort = (u.beard || 'braided_sinew_locks').split('_')[0];
+
+      cards.push(`
+        <div class="unit-card squad-${u.squadSize || 1}">
+          <div class="unit-thumb-wrap" onclick="Inspector.open('OWNED', '${u.id}')">
+            <img class="unit-thumb" data-uid="${u.id}" data-vkey="${vkey}" src="${thumbSrc}" alt="${u.name}" />
+            <span class="tier-tag" style="color:${tData.color};">${tData.code}</span>
+            <span class="squad-tag" style="color:${sqCfg.color};">${sqCfg.badge}</span>
+            <span class="finish-tag">${u.finish}</span>
+            <span class="dex-tag">#${String(u.dexNum).padStart(4, '0')}</span>
+            <span class="inspect-hint">🔍 3D</span>
+          </div>
+          <div class="unit-title">${u.name}</div>
+          <div class="unit-meta">
+            <span>Graft: ${traceShort}</span>
+            <b class="val-gold">◈${fmtNum(u.val)}</b>
+          </div>
+          <div class="stat-row">
+            <div>❤️ ${fmtNum(u.hp)}</div>
+            <div>⚔️ ${fmtNum(u.atk)}</div>
+            <div>[${u.group}] ${u.isListing ? '🔨AUCT' : (u.sectorId !== null ? '🌑PATROL' : 'IDLE')}</div>
+          </div>
+          <div class="hp-bar-outer"><div class="hp-bar-inner" style="width:${hpPct}%;"></div></div>
+          <select onchange="Game.assignPilot('${u.id}', this.value)">${pilotOpts.join('')}</select>
+          <select onchange="Game.assignSector('${u.id}', this.value)" ${u.isListing ? 'disabled' : ''}>${secOpts.join('')}</select>
+          <div class="btn-row">
+            <button class="btn btn-xs btn-gold" style="flex:1;" onclick="Game.listUnitInSellerAuction('${u.id}')" ${u.isListing || u.vaulted ? 'disabled' : ''}>🔨 Auction</button>
+            <button class="btn btn-xs ${u.vaulted ? 'btn-silver' : ''}" onclick="Game.toggleVault('${u.id}')">${u.vaulted ? '🔒' : '🔓'}</button>
+            <button class="btn btn-xs btn-emerald" onclick="Game.repairUnit('${u.id}')" ${u.hp >= u.maxHp ? 'disabled' : ''}>🔧</button>
+            <button class="btn btn-xs btn-crimson" onclick="Game.salvageUnit('${u.id}')" ${u.vaulted || u.isListing ? 'disabled' : ''}>♻️</button>
+          </div>
+        </div>
+      `);
+    }
+
+    listEl.innerHTML = cards.length > 0 ? cards.join('') : '<div style="padding:16px; color:var(--text-dim);">No Constructs match the current filters. Unseal Reliquaries in Tab 3 or Splice a Custom Construct in Tab 2!</div>';
+  },
+
+  renderTechAndPilots() {
+    const techDefs = [
+      { key: 'yield', name: 'Soul Harvester Conduit',   desc: '+5% Abyssal Patrol Tithe Credits per level' },
+      { key: 'fuel',  name: 'Arterial Ichor Reclaimer', desc: '-2% Ichor Supply consumption per level' },
+      { key: 'atk',   name: 'Bone-Pillar Hydraulic Graft',desc: '+4% Ritual Arena Torment per level' },
+      { key: 'net',   name: 'Barbed Cage Snare Matrix', desc: '+2% Arena Construct Capture per level' }
+    ];
+    document.getElementById('tech-list').innerHTML = techDefs.map(t => {
+      const lvl = State.tech[t.key] || 0;
+      const cost = Math.round(120 * Math.pow(1.65, lvl));
+      return `
+        <div class="unit-card">
+          <div class="unit-title">${t.name} (Lv.${lvl}/20)</div>
+          <div style="font-size:9px; color:var(--text-dim);">${t.desc}</div>
+          <button class="btn btn-silver" onclick="Game.buyTech('${t.key}')" ${lvl >= 20 ? 'disabled' : ''}>
+            ${lvl >= 20 ? 'MAX LEVEL' : `⬆️ Upgrade (◈${fmtNum(cost)})`}
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('pilot-count').textContent = State.pilots.length;
+    document.getElementById('pilot-list').innerHTML = State.pilots.map(p => `
+      <div class="unit-card">
+        <div class="unit-title">👑 ${p.name} (Rank ${p.rank})</div>
+        <div style="font-size:9px; color:var(--gold);">+${p.yieldBuff}% Soul Tithe • +${p.atkBuff}% Torment</div>
+        <div style="font-size:9px; color:var(--text-dim);">${p.unitId ? `Bound to Construct ${p.unitId}` : 'Unbound'}</div>
+      </div>
+    `).join('');
+  },
+
+  renderBoxes() {
+    document.getElementById('warbox-list').innerHTML = WARBOXES.map((b, i) => `
+      <div class="unit-card">
+        <div class="unit-title">📦 ${b.name}</div>
+        <div style="font-size:9px; color:var(--text-dim);">${b.desc}</div>
+        <div style="font-size:10px; color:var(--gold); font-weight:800;">Cost: ◈${fmtNum(b.cost)} / Reliquary</div>
+        <div class="btn-row">
+          <button class="btn btn-xs btn-silver" style="flex:1;" onclick="Game.openWarbox(${i}, 1)">1x</button>
+          <button class="btn btn-xs btn-gold" style="flex:1;" onclick="Game.openWarbox(${i}, 5)">5x</button>
+          <button class="btn btn-xs btn-emerald" style="flex:1;" onclick="Game.openWarbox(${i}, 10)">10x</button>
+        </div>
+      </div>
+    `).join('');
+
+    document.getElementById('pilotbox-list').innerHTML = PILOT_PODS.map((p, i) => `
+      <div class="unit-card">
+        <div class="unit-title">👑 ${p.name}</div>
+        <div style="font-size:9px; color:var(--text-dim);">Awakens Rank ${p.tierBonus + 1}+ Synod Archon</div>
+        <button class="btn btn-gold" onclick="Game.openPilotPod(${i})">Awaken (◈${fmtNum(p.cost)})</button>
+      </div>
+    `).join('');
+  },
+
+  showCratePulls(units) {
+    const banner = document.getElementById('crate-pull-banner');
+    const grid = document.getElementById('crate-pull-grid');
+    if (!banner || !grid) return;
+    banner.style.display = 'block';
+    grid.innerHTML = units.map(u => {
+      const tData = TIERS[u.tier] || TIERS[0];
+      const sqCfg = SQUAD_CFG[u.squadSize || 1] || SQUAD_CFG[1];
+      const vkey = getUnitVisualKey(u);
+      const src = getOrQueueThumb(u);
+      return `
+        <div class="unit-card squad-${u.squadSize || 1}" onclick="Inspector.open('OWNED', '${u.id}')">
+          <div class="unit-thumb-wrap" style="height:95px;">
+            <img class="unit-thumb" style="width:88px; height:88px;" data-vkey="${vkey}" src="${src}" />
+            <span class="tier-tag" style="color:${tData.color};">${tData.code}</span>
+            <span class="squad-tag" style="color:${sqCfg.color};">${sqCfg.badge}</span>
+          </div>
+          <div class="unit-title">${u.name}</div>
+          <div style="font-size:9px; color:var(--gold); font-weight:800;">◈${fmtNum(u.val)}</div>
+        </div>
+      `;
+    }).join('');
+  },
+
+  renderBuyerAuctionFull() {
+    const b = State.buyerAuction;
+    if (!b) return;
+    const u = b.unit;
+    const tData = TIERS[u.tier] || TIERS[0];
+    const sqCfg = SQUAD_CFG[u.squadSize || 1] || SQUAD_CFG[1];
+    const vkey = getUnitVisualKey(u);
+    const thumbEl = document.getElementById('buyer-thumb');
+    if (thumbEl) {
+      thumbEl.setAttribute('data-vkey', vkey);
+      thumbEl.src = getOrQueueThumb(u);
+    }
+    const tTag = document.getElementById('buyer-tier-tag');
+    if (tTag) { tTag.textContent = tData.code; tTag.style.color = tData.color; }
+    const sTag = document.getElementById('buyer-squad-tag');
+    if (sTag) { sTag.textContent = sqCfg.badge; sTag.style.color = sqCfg.color; }
+    document.getElementById('buyer-dex-tag').textContent = '#' + String(u.dexNum).padStart(4, '0');
+    document.getElementById('buyer-unit-title').textContent = u.name;
+    this.updateBuyerAuctionDOM();
+  },
+
+  updateBuyerAuctionDOM() {
+    const b = State.buyerAuction;
+    if (!b) return;
+    const u = b.unit;
+    document.getElementById('buyer-true-val').textContent = '◈' + fmtNum(u.val);
+    document.getElementById('buyer-cur-bid').textContent = '◈' + fmtNum(b.curBid);
+    document.getElementById('buyer-flip-profit').textContent = '+◈' + fmtNum(Math.max(0, u.val - b.curBid));
+    const hb = document.getElementById('buyer-high-bidder');
+    if (hb) {
+      hb.textContent = b.highBidder;
+      hb.style.color = b.playerIsHigh ? 'var(--emerald)' : 'var(--gold)';
+    }
+    const timerBadge = document.getElementById('buyer-timer-badge');
+    const navTimer = document.getElementById('auc-timer');
+    if (b.intermission > 0) {
+      if (timerBadge) timerBadge.textContent = `NEXT ${b.intermission.toFixed(1)}s`;
+      if (navTimer) navTimer.textContent = 'WAIT';
+    } else {
+      if (timerBadge) timerBadge.textContent = `⏱️ ${b.timeLeft.toFixed(1)}s`;
+      if (navTimer) navTimer.textContent = `${Math.ceil(b.timeLeft)}s`;
+    }
+    const banner = document.getElementById('buyer-verdict-banner');
+    if (banner) {
+      if (b.intermission > 0) {
+        banner.classList.add('show');
+        banner.style.color = b.playerIsHigh ? 'var(--emerald)' : 'var(--crimson)';
+        document.getElementById('buyer-verdict-text').textContent = b.verdictText;
+        document.getElementById('buyer-verdict-countdown').textContent = `NEXT IN ${b.intermission.toFixed(1)}s`;
+      } else {
+        banner.classList.remove('show');
+      }
+    }
+  },
+
+  renderSellerAuctions() {
+    const wrap = document.getElementById('seller-auction-list');
+    if (!wrap) return;
+    const out = [];
+    for (let i = 0; i < 5; i++) {
+      const slot = State.sellerAuctions[i];
+      if (!slot) {
+        out.push(`
+          <div class="unit-card" style="justify-content:center; align-items:center; min-height:170px; color:var(--text-dim); text-align:center;">
+            <div style="font-weight:800; color:var(--silver);">Empty Seller Lane #${i + 1}</div>
+            <div style="font-size:9px; margin:6px 0;">Click "🔨 Auction" on any Owned Construct or tap Auto-List above!</div>
+          </div>
+        `);
+      } else {
+        const u = slot.unit;
+        const tData = TIERS[u.tier] || TIERS[0];
+        const sqCfg = SQUAD_CFG[u.squadSize || 1] || SQUAD_CFG[1];
+        const vkey = getUnitVisualKey(u);
+        const src = getOrQueueThumb(u);
+        out.push(`
+          <div class="unit-card squad-${u.squadSize || 1}">
+            <div class="unit-thumb-wrap" style="height:100px;" onclick="Inspector.open('SELLER', ${i})">
+              <img class="unit-thumb" style="width:94px; height:94px;" data-vkey="${vkey}" src="${src}" />
+              <span class="tier-tag" style="color:${tData.color};">${tData.code}</span>
+              <span class="squad-tag" style="color:${sqCfg.color};">${sqCfg.badge}</span>
+              <span class="finish-tag">⏱️ ${slot.timeLeft.toFixed(1)}s</span>
+            </div>
+            <div class="unit-title">${u.name}</div>
+            <div style="font-size:9px;">Cur Bid: <b class="val-gold">◈${fmtNum(slot.curBid)}</b> ${slot.bidWarMult > 1 ? `<span class="val-crimson">[${slot.bidWarMult}x WAR!]</span>` : ''}</div>
+            <div style="font-size:9px; color:var(--text-dim);">Bidder: ${slot.highBidder}</div>
+          </div>
+        `);
+      }
+    }
+    wrap.innerHTML = out.join('');
+  },
+
+  renderSectors() {
+    const wrap = document.getElementById('sector-list');
+    if (!wrap) return;
+    wrap.innerHTML = SECTORS.map(s => {
+      const assigned = State.units.filter(u => u.sectorId === s.id);
+      return `
+        <div class="unit-card">
+          <div class="unit-title">🌑 ${s.name}</div>
+          <div style="font-size:9px; color:var(--text-dim);">${s.desc}</div>
+          <div style="font-size:9px; color:var(--gold);">Base: ◈${fmtNum(s.baseReward)} / ${s.cycleSec}s • Min: ${TIERS[s.minTier].code}</div>
+          <div style="font-size:9px; color:var(--emerald); font-weight:800;">Deployed Constructs: ${assigned.length}</div>
+        </div>
+      `;
+    }).join('');
+  },
+
+  renderCommand() {
+    const mBtn = document.getElementById('tog-automarch');
+    const rBtn = document.getElementById('tog-autorepair');
+    const sBtn = document.getElementById('tog-autosupply');
+    if (mBtn) { mBtn.textContent = `🤖 Auto-March: ${State.auto.autoMarch ? 'ON' : 'OFF'}`; mBtn.className = 'btn ' + (State.auto.autoMarch ? 'btn-emerald' : ''); }
+    if (rBtn) { rBtn.textContent = `🔧 Auto-Repair: ${State.auto.autoRepair ? 'ON' : 'OFF'}`; rBtn.className = 'btn ' + (State.auto.autoRepair ? 'btn-emerald' : ''); }
+    if (sBtn) { sBtn.textContent = `🩸 Auto-Supply: ${State.auto.autoSupply ? 'ON' : 'OFF'}`; sBtn.className = 'btn ' + (State.auto.autoSupply ? 'btn-emerald' : ''); }
+
+    const cWrap = document.getElementById('commission-list');
+    if (cWrap) {
+      cWrap.innerHTML = State.commissions.map(c => `
+        <div class="unit-card">
+          <div class="unit-title">📜 ${c.title}</div>
+          <div style="font-size:9px; color:var(--text-dim);">Requires: ${TIERS[c.reqTier].code}+ (${SQUAD_CFG[c.reqSquad].badge})</div>
+          <div style="font-size:10px; color:var(--gold); font-weight:800;">Reward: ◈${fmtNum(c.rewardCreds)} + Bonus Construct</div>
+          <button class="btn btn-emerald" onclick="Game.fulfillCommission('${c.id}')">Deliver Construct</button>
+        </div>
+      `).join('');
+    }
+  },
+
+  renderMilestones() {
+    const wrap = document.getElementById('milestone-list');
+    if (!wrap) return;
+    const filter = document.getElementById('mile-book-filter')?.value || 'ALL';
+    const list = MILESTONES.filter(m => filter === 'ALL' || String(m.book) === filter);
+    wrap.innerHTML = list.map(m => {
+      const prog = m.getProg();
+      const claimed = !!State.claimedMilestones[m.id];
+      const ready = !claimed && prog >= m.target;
+      return `
+        <div class="unit-card" style="${claimed ? 'opacity:0.5;' : (ready ? 'border-color:var(--gold);' : '')}">
+          <div class="unit-title">🏆 ${m.name}</div>
+          <div style="font-size:9px; color:var(--text-dim);">Progress: ${fmtNum(prog)} / ${fmtNum(m.target)}</div>
+          <div style="font-size:9px; color:var(--gold);">Reward: ◈${fmtNum(m.reward)}</div>
+          <button class="btn btn-xs ${ready ? 'btn-gold' : ''}" onclick="Game.claimMilestone(${m.id})" ${!ready ? 'disabled' : ''}>
+            ${claimed ? 'CLAIMED' : (ready ? '✨ CLAIM' : 'LOCKED')}
+          </button>
+        </div>
+      `;
+    }).join('');
+  }
+};
+
+/* ============================================================================
+   10. THUMBNAIL-STRIPPED LOCALSTORAGE SAVE SYSTEM
+   ============================================================================ */
+const SAVE_KEY = 'OCCULT_MACHINE_2000_SPLICER_V1';
+
+const SaveSystem = {
+  getCleanPayload() {
+    const cleanUnits = State.units.map(u => {
+      const copy = { ...u };
+      delete copy.thumb;
+      return copy;
+    });
+    return {
+      funds: State.funds,
+      fuel: State.fuel,
+      godMode: State.godMode,
+      units: cleanUnits,
+      pilots: State.pilots,
+      codex: State.codex,
+      tech: State.tech,
+      auto: State.auto,
+      stats: State.stats,
+      claimedMilestones: State.claimedMilestones,
+      NEXT_ID
+    };
+  },
+
+  saveToLocal(showToast = false) {
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(this.getCleanPayload()));
+      if (showToast) UI.toast('💾 Synod Construct Archive Saved to Browser Storage!');
+    } catch (e) {
+      if (showToast) UI.toast('⚠️ Storage quota full; use Export Backup String.');
+    }
+  },
+
+  loadFromLocal() {
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) return false;
+      const data = JSON.parse(raw);
+      if (!data || !Array.isArray(data.units)) return false;
+      State.funds = data.funds ?? 500;
+      State.fuel = data.fuel ?? 1000;
+      State.godMode = !!data.godMode;
+      State.units = data.units.map(u => ({ ...u, isListing: false }));
+      State.pilots = data.pilots || [];
+      State.codex = data.codex || {};
+      State.tech = data.tech || { yield: 0, fuel: 0, atk: 0, net: 0 };
+      State.auto = data.auto || { autoMarch: false, autoRepair: false, autoSupply: false };
+      State.stats = { ...State.stats, ...(data.stats || {}) };
+      State.claimedMilestones = data.claimedMilestones || {};
+      NEXT_ID = data.NEXT_ID || 500;
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+
+  exportSaveString() {
+    const str = btoa(unescape(encodeURIComponent(JSON.stringify(this.getCleanPayload()))));
+    const box = document.getElementById('save-string-box');
+    if (box) { box.value = str; box.select(); document.execCommand('copy'); }
+    UI.toast('📤 Exported & Copied Save String!');
+  },
+
+  importSaveString() {
+    const str = document.getElementById('save-string-box')?.value.trim();
+    if (!str) return;
+    try {
+      const json = decodeURIComponent(escape(atob(str)));
+      localStorage.setItem(SAVE_KEY, json);
+      this.loadFromLocal();
+      UI.closeModal('save-modal');
+      UI.refreshAll();
+      UI.toast('📥 Loaded Backup Save String!');
+    } catch (e) {
+      UI.toast('❌ Invalid Save String!');
+    }
+  },
+
+  hardReset() {
+    localStorage.removeItem(SAVE_KEY);
+    location.reload();
+  }
+};
+
+/* ============================================================================
+   11. MAIN 60 FPS RENDER LOOP & 100ms AUCTION / ABYSSAL PATROL TICKER
+   ============================================================================ */
+function populateFilterDropdowns() {
+  const tSel = document.getElementById('filter-tier');
+  if (tSel) {
+    tSel.innerHTML = '<option value="ALL">All 15 Tiers</option>' +
+      TIERS.map(t => `<option value="${t.id}">${t.code}: ${t.name}</option>`).join('');
+  }
+  const dSel = document.getElementById('filter-div');
+  if (dSel) {
+    dSel.innerHTML = '<option value="ALL">All 10 Biomech Classes</option>' +
+      ARCHETYPES.map(a => `<option value="${a.id}">${a.name}</option>`).join('');
+  }
+}
+
+function bootGame() {
+  populateFilterDropdowns();
+  CustomForge.init();
+  Inspector.init();
+
+  const loaded = SaveSystem.loadFromLocal();
+  if (!loaded || State.units.length === 0) {
+    // Seed 3 distinct starter constructs:
+    // 1. 1-Entity Solo Monolith (Four-Armed Seraph Splicer)
+    // 2. 3-Entity Bone Triad (Monolith Great-Cleaver Executioner Triad)
+    // 3. 5-Entity Occult Choir Rank (Caged Iron-Maiden & Blind Seraph Choir)
+    const u1 = createCollectorUnit(0, 0, 0, { squadSize: 1, beard: 'braided_sinew_locks' });
+    const u2 = createCollectorUnit(1, 2, 1, { squadSize: 3, beard: 'weeping_chains' });
+    const u3 = createCollectorUnit(2, 1, 2, { squadSize: 5, beard: 'arterial_hoses' });
+    Game.addUnitToInventory(u1);
+    Game.addUnitToInventory(u2);
+    Game.addUnitToInventory(u3);
+    State.pilots.push(createCommander(1));
+  }
+
+  // Pre-bake starter constructs synchronously so Tab 1 displays crisp 3D voxel renders immediately at launch
+  for (let i = 0; i < Math.min(6, State.units.length); i++) {
+    const u = State.units[i];
+    const vkey = getUnitVisualKey(u);
+    if (!ThumbCache.has(vkey)) {
+      ThumbCache.set(vkey, VoxelEngine.bakeThumbnailDataURL(u));
+    }
+  }
+
+  Game.generateCommissions();
+  Game.spawnBuyerAuction();
+  UI.refreshAll();
+
+  // 60 FPS turntable loop for Soul Splicer & 3D Inspector
+  function animateTurntables() {
+    if (UI.activeTab === 'tab-forge' && CustomForge.spinning && !CustomForge.dragging) {
+      CustomForge.yaw += 0.014;
+      CustomForge.renderFrame();
+    }
+    if (Inspector.openFlag && Inspector.spinning && !Inspector.dragging) {
+      Inspector.yaw += 0.015;
+      Inspector.renderFrame();
+    }
+    requestAnimationFrame(animateTurntables);
+  }
+  requestAnimationFrame(animateTurntables);
+
+  // 100ms live auction & abyssal sector patrol tick
+  setInterval(() => {
+    // 1. Buyer Auction tick
+    const b = State.buyerAuction;
+    if (b) {
+      if (b.intermission > 0) {
+        b.intermission = Math.max(0, b.intermission - 0.1);
+        if (b.intermission <= 0) {
+          Game.spawnBuyerAuction();
+        } else {
+          UI.updateBuyerAuctionDOM();
+        }
+      } else {
+        b.timeLeft = Math.max(0, b.timeLeft - 0.1);
+        b.aiStunTimer = Math.max(0, b.aiStunTimer - 0.1);
+
+        if (b.timeLeft > 0 && b.aiStunTimer <= 0 && b.curBid < b.unit.val * 0.72 && Math.random() < 0.07) {
+          b.curBid += Math.max(1, Math.round(b.unit.val * 0.04));
+          b.highBidder = 'Synod Flesh-Syndicate';
+          b.playerIsHigh = false;
+        }
+
+        if (b.timeLeft <= 0) {
+          b.intermission = 3.0;
+          if (b.playerIsHigh && State.funds >= b.curBid) {
+            State.funds -= b.curBid;
+            Game.addUnitToInventory(b.unit);
+            State.stats.auctionsWon++;
+            b.verdictText = `🏆 WON ${b.unit.name} FOR ◈${fmtNum(b.curBid)}!`;
+            UI.toast(`🔨 Won Bargain Construct: ${b.unit.name} for ◈${fmtNum(b.curBid)}!`);
+            if (UI.activeTab === 'tab-racks') UI.renderRacks();
+          } else {
+            b.verdictText = `SOLD TO ${b.highBidder} FOR ◈${fmtNum(b.curBid)}`;
+          }
+          UI.updateHUD();
+        }
+        UI.updateBuyerAuctionDOM();
+      }
+    }
+
+    // 2. 5-Lane Seller Auctions tick
+    let sellerChanged = false;
+    const npcBidders = ['Archon Seth Vault', 'Cenobite Labyrinth', 'Basilica of Marble', 'Hellspawn Covenant', 'Golgotha Bone-Guild'];
+    for (let i = 0; i < 5; i++) {
+      const s = State.sellerAuctions[i];
+      if (!s) continue;
+      s.timeLeft = Math.max(0, s.timeLeft - 0.1);
+
+      if (s.timeLeft > 0 && Math.random() < 0.10) {
+        s.hasNpcBid = true;
+        if (Math.random() < 0.015) {
+          const spike = 2 + Math.floor(Math.random() * 19);
+          s.bidWarMult = Math.max(s.bidWarMult, spike);
+          s.curBid = Math.round(s.unit.val * spike);
+          s.highBidder = `🔥 ${npcBidders[Math.floor(Math.random() * npcBidders.length)]} [BID WAR!]`;
+          UI.toast(`🔥 ${spike}x BID WAR SPIKE on Lane #${i + 1}: ◈${fmtNum(s.curBid)}!`);
+        } else {
+          s.curBid += Math.max(2, Math.round(s.unit.val * 0.12));
+          s.highBidder = npcBidders[Math.floor(Math.random() * npcBidders.length)];
+        }
+        if (s.timeLeft <= 1.0) s.timeLeft = 2.0;
+        sellerChanged = true;
+      }
+
+      if (s.timeLeft <= 0) {
+        if (s.hasNpcBid) {
+          State.funds += s.curBid;
+          State.stats.totalEarned += s.curBid;
+          State.stats.auctionsSold++;
+          const uIdx = State.units.findIndex(x => x.id === s.unit.id);
+          if (uIdx !== -1) {
+            const u = State.units[uIdx];
+            if (u.pilotId) {
+              const p = State.pilots.find(x => x.id === u.pilotId);
+              if (p) p.unitId = null;
+            }
+            State.units.splice(uIdx, 1);
+          }
+          UI.toast(`💰 Sold ${s.unit.name} for ◈${fmtNum(s.curBid)}!`);
+        } else {
+          s.unit.isListing = false;
+          UI.toast(`⏱️ Reserve not met for ${s.unit.name}; returned to Owned Constructs.`);
+        }
+        State.sellerAuctions[i] = null;
+        sellerChanged = true;
+        UI.updateHUD();
+        if (UI.activeTab === 'tab-racks') UI.renderRacks();
+      }
+    }
+    if (UI.activeTab === 'tab-auctions' && sellerChanged) {
+      UI.renderSellerAuctions();
+    }
+
+    // 3. Abyssal Sector Patrols & Automations tick
+    for (let sIdx = 0; sIdx < SECTORS.length; sIdx++) {
+      const sec = SECTORS[sIdx];
+      const patrollers = State.units.filter(u => u.sectorId === sec.id && !u.isListing && u.hp > 0);
+      if (patrollers.length > 0) {
+        State.patrolTimers[sIdx] = (State.patrolTimers[sIdx] || 0) + 0.1;
+        if (State.patrolTimers[sIdx] >= sec.cycleSec) {
+          State.patrolTimers[sIdx] = 0;
+          const fuelNeed = Math.max(1, Math.round(sec.fuelCost * (1 - (State.tech.fuel || 0) * 0.02)));
+          if (State.fuel < fuelNeed && State.auto.autoSupply) {
+            Game.buyFuel(500);
+          }
+          if (State.fuel >= fuelNeed) {
+            State.fuel -= fuelNeed;
+            let payout = 0;
+            for (const u of patrollers) {
+              const sqMult = SQUAD_CFG[u.squadSize || 1]?.mult || 1;
+              const p = u.pilotId ? State.pilots.find(x => x.id === u.pilotId) : null;
+              const pBuff = p ? (1 + p.yieldBuff / 100) : 1;
+              const tBuff = 1 + (State.tech.yield || 0) * 0.05;
+              payout += Math.round(sec.baseReward * sqMult * pBuff * tBuff);
+              u.hp = Math.max(1, u.hp - Math.ceil(u.maxHp * 0.02));
+              if (State.auto.autoRepair && u.hp < u.maxHp * 0.6) {
+                Game.repairUnit(u.id);
+              }
+            }
+            State.funds += payout;
+            State.stats.totalEarned += payout;
+            State.stats.patrolsDone++;
+            UI.updateHUD();
+          }
+        }
+      }
+    }
+
+    if (State.auto.autoMarch) {
+      for (const u of State.units) {
+        if (u.sectorId === null && !u.isListing && u.hp > 0) {
+          let bestSec = 0;
+          for (const s of SECTORS) if (u.tier >= s.minTier) bestSec = s.id;
+          u.sectorId = bestSec;
+        }
+      }
+    }
+  }, 100);
+
+  // Auto-save every 5 seconds
+  setInterval(() => SaveSystem.saveToLocal(false), 5000);
+}
+
+window.addEventListener('DOMContentLoaded', bootGame);
+</script>
+</body>
+</html>
